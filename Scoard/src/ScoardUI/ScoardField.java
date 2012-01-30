@@ -51,12 +51,12 @@ public class ScoardField extends javax.swing.JFrame {
         radiox3r1 = new javax.swing.JRadioButton();
         radiox3r2 = new javax.swing.JRadioButton();
         radiox3r3 = new javax.swing.JRadioButton();
-        lblscore = new javax.swing.JLabel();
-        isTurn1 = new javax.swing.JRadioButton();
-        isTurn2 = new javax.swing.JRadioButton();
+        scorebtn = new javax.swing.JButton();
         helpbar = new javax.swing.JLabel();
         resetbtn = new javax.swing.JButton();
         exitbtn = new javax.swing.JButton();
+        isTurn2 = new javax.swing.JRadioButton();
+        isTurn1 = new javax.swing.JRadioButton();
         scoardMenu = new javax.swing.JMenuBar();
         menu_file = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
@@ -72,7 +72,7 @@ public class ScoardField extends javax.swing.JFrame {
         setBackground(new java.awt.Color(153, 204, 0));
         setForeground(new java.awt.Color(153, 204, 0));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18));
         jLabel1.setText("Score Board");
         jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 0, 0), new java.awt.Color(255, 0, 0), null, null));
 
@@ -89,8 +89,9 @@ public class ScoardField extends javax.swing.JFrame {
         teamscore2.setText("501");
         teamscore2.setAutoscrolls(false);
 
-        hitsPanel.setBackground(new java.awt.Color(204, 255, 153));
+        hitsPanel.setBackground(new java.awt.Color(102, 102, 255));
         hitsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Round Hits"));
+        hitsPanel.setMinimumSize(new java.awt.Dimension(150, 150));
 
         fshoot.setText("first shoot");
 
@@ -103,34 +104,62 @@ public class ScoardField extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tareaNotes);
 
         radiox2r2.setText("x2");
+        radiox2r2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiox2r2ActionPerformed(evt);
+            }
+        });
 
         radiox2r1.setText("x2");
+        radiox2r1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiox2r1ActionPerformed(evt);
+            }
+        });
 
         radiox2r3.setText("x2");
+        radiox2r3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiox2r3ActionPerformed(evt);
+            }
+        });
 
         radiox3r1.setText("x3");
+        radiox3r1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiox3r1ActionPerformed(evt);
+            }
+        });
 
         radiox3r2.setText("x3");
+        radiox3r2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiox3r2ActionPerformed(evt);
+            }
+        });
 
         radiox3r3.setText("x3");
+        radiox3r3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radiox3r3ActionPerformed(evt);
+            }
+        });
 
-        lblscore.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblscore.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lblscore.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(0, 153, 51), new java.awt.Color(0, 102, 51), null));
+        scorebtn.setLabel("0");
 
         javax.swing.GroupLayout hitsPanelLayout = new javax.swing.GroupLayout(hitsPanel);
         hitsPanel.setLayout(hitsPanelLayout);
         hitsPanelLayout.setHorizontalGroup(
             hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hitsPanelLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
                 .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(hitsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(sshoot, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(fshoot, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tshoot, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(hitsPanelLayout.createSequentialGroup()
                                 .addComponent(radiox2r1)
@@ -144,22 +173,18 @@ public class ScoardField extends javax.swing.JFrame {
                                 .addComponent(radiox2r3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(radiox3r3))))
-                    .addGroup(hitsPanelLayout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addComponent(lblscore, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                    .addComponent(scorebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         hitsPanelLayout.setVerticalGroup(
             hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hitsPanelLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
                     .addGroup(hitsPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE))
-                    .addGroup(hitsPanelLayout.createSequentialGroup()
-                        .addGap(17, 17, 17)
                         .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(radiox2r1)
@@ -177,16 +202,10 @@ public class ScoardField extends javax.swing.JFrame {
                             .addGroup(hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(radiox2r2)
                                 .addComponent(radiox3r2)))
-                        .addGap(18, 18, 18)
-                        .addComponent(lblscore, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(scorebtn, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-
-        isTurn1.setLabel("");
-        isTurn1.setName("jradio1"); // NOI18N
-
-        isTurn2.setLabel("");
-        isTurn2.setName("jradio2"); // NOI18N
 
         helpbar.setBackground(new java.awt.Color(153, 204, 0));
         helpbar.setForeground(new java.awt.Color(102, 255, 102));
@@ -200,6 +219,10 @@ public class ScoardField extends javax.swing.JFrame {
 
         exitbtn.setText("Finish");
         exitbtn.setActionCommand("exitbtn");
+
+        isTurn2.setName("jradio2"); // NOI18N
+
+        isTurn1.setName("jradio1"); // NOI18N
 
         menu_file.setText("File");
 
@@ -218,68 +241,187 @@ public class ScoardField extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(112, 112, 112)
+                .addGap(152, 152, 152)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(resetbtn)
-                            .addGap(18, 18, 18)
-                            .addComponent(exitbtn)
-                            .addGap(99, 99, 99))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(teamlbl1)
-                                .addComponent(teamlbl2))
-                            .addGap(31, 31, 31)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(teamscore2)
-                                .addComponent(teamscore1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(isTurn1)
-                                .addComponent(isTurn2))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(hitsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addContainerGap()))))
+                    .addComponent(teamlbl1)
+                    .addComponent(teamlbl2))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(teamscore2)
+                    .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(isTurn1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(isTurn2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(hitsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(21, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(175, Short.MAX_VALUE)
+                .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(resetbtn)
+                .addGap(18, 18, 18)
+                .addComponent(exitbtn)
+                .addGap(24, 24, 24))
             .addGroup(layout.createSequentialGroup()
-                .addGap(354, 354, 354)
+                .addGap(301, 301, 301)
                 .addComponent(jLabel1)
-                .addContainerGap(403, Short.MAX_VALUE))
+                .addContainerGap(459, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(hitsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(resetbtn)
-                            .addComponent(exitbtn)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(isTurn1)
+                                .addGap(52, 52, 52)
+                                .addComponent(isTurn2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(teamlbl1)
+                                    .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(52, 52, 52)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(teamlbl2)
+                                    .addComponent(teamscore2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(165, 165, 165))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(teamlbl1)
-                            .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(isTurn1))
-                        .addGap(52, 52, 52)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(teamlbl2)
-                            .addComponent(teamscore2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(isTurn2))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGap(41, 41, 41)
+                        .addComponent(hitsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(resetbtn)
+                        .addComponent(exitbtn))
+                    .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+
+private void radiox2r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r1ActionPerformed
+    
+        if(radiox2r1.isSelected()){
+            //TODO check input
+            int getvalue=Integer.parseInt(fshoot.getText());
+            int value=getvalue*2;
+            totalscore+=value;
+            String str=String.valueOf(value);
+            String score=String.valueOf(totalscore);
+            fshoot.setText(str);
+            scorebtn.setText(score);
+            radiox3r1.setEnabled(false);
+            fshoot.setEditable(false);
+        }
+        else{
+            radiox2r1.setEnabled(false);
+            //TODO prompt to change the state
+        }
+    
+}//GEN-LAST:event_radiox2r1ActionPerformed
+
+private void radiox3r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r1ActionPerformed
+    if(radiox3r1.isSelected()){
+            //TODO check input
+            int getvalue=Integer.parseInt(fshoot.getText());
+            int value=getvalue*3;
+            totalscore+=value;
+            String str=String.valueOf(value);
+            String score=String.valueOf(totalscore);
+            fshoot.setText(str);
+            scorebtn.setText(score);
+            radiox2r1.setEnabled(false);
+            fshoot.setEditable(false);
+        }
+        else{
+            radiox3r1.setEnabled(false);
+            //TODO prompt to change the state
+        }
+}//GEN-LAST:event_radiox3r1ActionPerformed
+
+private void radiox2r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r2ActionPerformed
+    if(radiox2r2.isSelected()){
+        //TODO check input
+            int getvalue=Integer.parseInt(sshoot.getText());
+            int value=getvalue*2;
+            totalscore+=value;
+            String str=String.valueOf(value);
+            String score=String.valueOf(totalscore);
+            sshoot.setText(str);
+            scorebtn.setText(score);
+            radiox3r2.setEnabled(false);
+            sshoot.setEditable(false);
+        }
+        else{
+            radiox2r2.setEnabled(false);
+            //TODO prompt to change the state
+        }
+}//GEN-LAST:event_radiox2r2ActionPerformed
+
+private void radiox3r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r2ActionPerformed
+    if(radiox3r2.isSelected()){
+            //TODO check input
+            int getvalue=Integer.parseInt(sshoot.getText());
+            int value=getvalue*3;
+            totalscore+=value;
+            String str=String.valueOf(value);
+            String score=String.valueOf(totalscore);
+            sshoot.setText(str);
+            scorebtn.setText(score);
+            radiox2r2.setEnabled(false);
+            sshoot.setEditable(false);
+        }
+        else{
+            radiox3r2.setEnabled(false);
+            //TODO prompt to change the state
+        }
+}//GEN-LAST:event_radiox3r2ActionPerformed
+
+private void radiox2r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r3ActionPerformed
+    if(radiox2r3.isSelected()){
+            int getvalue=Integer.parseInt(tshoot.getText());
+            int value=getvalue*2;
+            totalscore+=value;
+            String str=String.valueOf(value);
+            String score=String.valueOf(totalscore);
+            tshoot.setText(str);
+            scorebtn.setText(score);
+            radiox3r3.setEnabled(false);
+            tshoot.setEditable(false);
+        }
+        else{
+            radiox2r3.setEnabled(false);
+            //TODO prompt to change the state
+        }
+}//GEN-LAST:event_radiox2r3ActionPerformed
+
+private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r3ActionPerformed
+    if(radiox3r3.isSelected()){
+            //TODO check input
+            int getvalue=Integer.parseInt(tshoot.getText());
+            int value=getvalue*3;
+            totalscore+=value;
+            String str=String.valueOf(value);
+            String score=String.valueOf(totalscore);
+            tshoot.setText(str);
+            scorebtn.setText(score);
+            radiox2r3.setEnabled(false);
+            tshoot.setEditable(false);
+        }
+        else{
+            radiox3r3.setEnabled(false);
+            //TODO prompt to change the state
+        }
+}//GEN-LAST:event_radiox3r3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -316,6 +458,10 @@ public class ScoardField extends javax.swing.JFrame {
             }
         });
     }
+    
+    private int teamScore1;
+    private int teamScore2;
+    private int totalscore=0;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;
@@ -330,7 +476,6 @@ public class ScoardField extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblscore;
     private javax.swing.JMenu menu_file;
     private javax.swing.JMenu menu_help;
     private javax.swing.JRadioButton radiox2r1;
@@ -341,6 +486,7 @@ public class ScoardField extends javax.swing.JFrame {
     private javax.swing.JRadioButton radiox3r3;
     private javax.swing.JButton resetbtn;
     private javax.swing.JMenuBar scoardMenu;
+    private javax.swing.JButton scorebtn;
     private javax.swing.JTextField sshoot;
     private javax.swing.JTextArea tareaNotes;
     private javax.swing.JLabel teamlbl1;

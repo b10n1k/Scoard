@@ -18,6 +18,6 @@ public interface GameRules {
     public String displayScore();
     
     public static int HITS = 3;
-    public static int INITIAL_SCORE = 501;
+    public static int H = 501;
     
 }
