@@ -10,15 +10,34 @@
  */
 package ScoardUI;
 
+import ScoardGame.Game;
+
 /**
  *
  * @author j0ni
  */
 public class ScoardField extends javax.swing.JFrame {
 
+    public static int getValue() {
+        return totalscore;
+    }
+
+    public int getScore(){
+        return totalscore;
+    }
+    
+    public void setScore(int sc){
+        totalscore=sc;
+    }
+    
+    private void setTeamScore(int sc){
+        thegame.setStorePoint(sc);
+    }
+    
     /** Creates new form ScoardField */
     public ScoardField() {
         initComponents();
+        thegame=new Game();
     }
 
     /** This method is called from within the constructor to
@@ -475,7 +494,8 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     
     private int teamScore1;
     private int teamScore2;
-    private int totalscore=0;
+    private static int totalscore=0;
+    private Game thegame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;

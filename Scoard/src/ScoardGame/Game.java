@@ -11,11 +11,15 @@ import java.util.Vector;
  * @author j0ni
  */
 public class Game {
+    
+    private int storePoint;
 
-    private static class Play extends Thread {
+    public void setStorePoint(int storePoint) {
+        this.storePoint = storePoint;
+    }
 
-        public Play() {
-        }
+    public int getStorePoint() {
+        return storePoint;
     }
 
     public Game() {

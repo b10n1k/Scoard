@@ -12,6 +12,7 @@ public abstract class Player {
     
     public Player(String player){
         setName(player);
+        score=0;
     }
     
     public abstract int getScore();
