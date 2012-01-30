@@ -146,6 +146,11 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         scorebtn.setLabel("0");
+        scorebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                scorebtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout hitsPanelLayout = new javax.swing.GroupLayout(hitsPanel);
         hitsPanel.setLayout(hitsPanelLayout);
@@ -422,6 +427,15 @@ private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             //TODO prompt to change the state
         }
 }//GEN-LAST:event_radiox3r3ActionPerformed
+
+private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scorebtnActionPerformed
+// TODO add your handling code here:
+    if (isTurn1.isSelected()){
+        
+        teamlbl1.setText(scorebtn.getText());
+        
+    }
+}//GEN-LAST:event_scorebtnActionPerformed
 
     /**
      * @param args the command line arguments
