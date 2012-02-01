@@ -12,29 +12,32 @@ import java.util.Vector;
  */
 public class Game {
     
-    private int storePoint;
-
-    public void setStorePoint(int storePoint) {
-        this.storePoint = storePoint;
-    }
-
-    public int getStorePoint() {
-        return storePoint;
-    }
-
-    public Game() {
-    }
-    
     public Game(){
-        play=new Play();
+        teams=new Vector<ScoardTeam>();
     }
     
     public void register(ScoardTeam team){
         teams.add(team);
     }
     
+    public void register(ScoardTeam teamA, ScoardTeam teamB){
+        teams.add(teamA);
+        teams.add(teamB);
+    }
     
+    public void startGame(){
+        //Thread t1 = new Thread(new teams.)
+    }
+    
+    public void setStorePoint(int storePoint) {//private
+        this.storePoint = storePoint;
+    }
+
+    public int getStorePoint() {//private
+        return storePoint;
+    }    
     
     private Vector<ScoardTeam> teams;
+    private int storePoint;
     Thread play;
 }

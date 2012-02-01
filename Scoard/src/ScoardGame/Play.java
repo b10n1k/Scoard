@@ -19,14 +19,20 @@ public class Play implements Runnable{
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    private synchronized int shoot(){
-        try {
-            wait();
-            for(int i=0;i<3;i++)
-                points[i]=getShoot();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Play.class.getName()).log(Level.SEVERE, null, ex);
+    private synchronized int play(){
+        while(enableToPlay=true){
+            try {
+                wait();
+                
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Play.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            for(int i=0;i<3;i++){
+                    points[i]=getShoot();
+            }
         }
+        notifyAll();
+        return x;
         
     }
     

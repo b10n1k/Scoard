@@ -12,14 +12,23 @@ public abstract class Player {
     
     public Player(String player){
         setName(player);
-        score=0;
+        score=Rules.INITIAL_SCORE;
     }
     
-    public abstract int getScore();
-    public abstract void setScore(int score);
+    public int getScore(){
+        return score;
+    }
+    
+    public void setScore(int points){
+        score=-points;
+    }
     
     private void setName(String name){
         player=name;
+    }
+    
+    protected void reduceScore(){
+        
     }
     
     private String player;

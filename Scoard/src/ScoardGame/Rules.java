@@ -8,7 +8,7 @@ package ScoardGame;
  *
  * @author j0ni
  */
-public class Rules implements GameRules{
+public final class Rules implements GameRules{
 
     public Rules() {
     }

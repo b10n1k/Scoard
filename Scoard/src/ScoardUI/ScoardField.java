@@ -11,6 +11,7 @@
 package ScoardUI;
 
 import ScoardGame.Game;
+import ScoardGame.ScoardTeam;
 
 /**
  *
@@ -113,6 +114,11 @@ public class ScoardField extends javax.swing.JFrame {
         hitsPanel.setMinimumSize(new java.awt.Dimension(150, 150));
 
         fshoot.setText("first shoot");
+        fshoot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fshootActionPerformed(evt);
+            }
+        });
 
         sshoot.setText("second shoot");
 
@@ -452,9 +458,23 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     if (isTurn1.isSelected()){
         
         teamlbl1.setText(scorebtn.getText());
+        isTurn2.enableInputMethods(false);
+    }
+    else 
+        if(isTurn2.isSelected()){
         
+        teamlbl1.setText(scorebtn.getText());
+        isTurn1.enableInputMethods(false);
     }
 }//GEN-LAST:event_scorebtnActionPerformed
+
+private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fshootActionPerformed
+// TODO add your handling code here:
+    if (fshoot.getAction()!=null){
+        scorebtn.setText(fshoot.getText());
+        
+    }
+}//GEN-LAST:event_fshootActionPerformed
 
     /**
      * @param args the command line arguments
@@ -490,6 +510,14 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 new ScoardField().setVisible(true);
             }
         });
+        ScoardTeam t1 = new ScoardTeam("player1");
+        ScoardTeam t2 = new ScoardTeam("player2");
+        Thread playA =
+        Game velakia = new Game(t1,t2);
+        
+        velakia.register(new ScoardTeam("Team A"));
+        velakia.register(new ScoardTeam("Team B"));
+        
     }
     
     private int teamScore1;
