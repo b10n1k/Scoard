@@ -11,7 +11,7 @@
 package ScoardUI;
 
 import ScoardGame.Game;
-import ScoardGame.Rules;
+import ScoardGame.Rules01;
 import ScoardGame.ScoardTeam;
 import java.awt.Desktop.Action;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class ScoardField extends javax.swing.JFrame {
         isTurn1.doClick();
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
         resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
-        rules = new Rules();
+        rules = new Rules01();
     }
 
     /** This method is called from within the constructor to
@@ -613,53 +613,9 @@ private void reset() {
         isTurn2.doClick();
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ScoardField.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ScoardField.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ScoardField.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ScoardField.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-           public void run() {
-                ScoardField fld =new ScoardField();
-                fld.setVisible(true);
-                
-            }
-        });
-        //ScoardTeam t1 = new ScoardTeam("player1");
-        //ScoardTeam t2 = new ScoardTeam("player2");
-        //Thread playA =
-       // Game velakia = new Game(t1,t2);
-        
-        //velakia.register(new ScoardTeam("Team A"));
-        //velakia.register(new ScoardTeam("Team B"));
-        
-        
-    }
+ public void updateNotification(String msg){
+     helpbar.setText(msg);
+ }
     
     private int teamScore1=501;
     private int teamScore2=501;
@@ -668,7 +624,7 @@ private void reset() {
     private boolean btnavailability=false;
     private Game thegame;
     private ArrayList<javax.swing.JRadioButton> resetradiobutton;
-    private Rules rules;
+    private Rules01 rules;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;

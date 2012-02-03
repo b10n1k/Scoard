@@ -5,6 +5,7 @@
 package ScoardGame;
 
 import ScoardUI.ScoardField;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,18 +13,14 @@ import ScoardUI.ScoardField;
  */
 public class ScoardTeam extends Player implements Runnable{
     
-    private String[] players;
+    private ArrayList<String> players;
     private boolean enableToPlay;
-    
+    private int score;
     //private int tscore;
 
     public ScoardTeam(String player) {
         super(player);
-    }
-
-    public ScoardTeam(String player, int numOfParticipants) {
-        super(player);
-        players=new String[numOfParticipants];
+        players=new ArrayList<String>();
     }
 
     @Override
@@ -48,8 +45,22 @@ public class ScoardTeam extends Player implements Runnable{
         return getScore()-sum;
         
     }
+    protected void addPlayer(String name){
+        players.add(name);
+        
+    }
     
     private int getShoot() {
         return ScoardField.getValue();
+    }
+
+    public String displayStatus(int index) {
+        String name = getPlayerName(index);
+        return name+" : TeamScore : "+score;
+    }
+
+    @Override
+    protected String getPlayerName(int index) {
+        return players.get(index);
     }
 }

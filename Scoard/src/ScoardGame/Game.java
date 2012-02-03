@@ -16,6 +16,10 @@ public class Game {
     public Game(){
         teams=new Vector<ScoardTeam>();
     }
+
+    Game(ScoardTeam t1, ScoardTeam t2) {
+        register(t1); register(t2);
+    }
     
     public void register(ScoardTeam team){
         teams.add(team);
