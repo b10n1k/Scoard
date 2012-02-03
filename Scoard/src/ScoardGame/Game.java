@@ -4,6 +4,7 @@
  */
 package ScoardGame;
 
+import ScoardUI.ScoardField;
 import java.util.Vector;
 
 /**

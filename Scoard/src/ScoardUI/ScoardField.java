@@ -11,7 +11,10 @@
 package ScoardUI;
 
 import ScoardGame.Game;
+import ScoardGame.Rules;
 import ScoardGame.ScoardTeam;
+import java.awt.Desktop.Action;
+import java.util.ArrayList;
 
 /**
  *
@@ -22,6 +25,7 @@ public class ScoardField extends javax.swing.JFrame {
     public static int getValue() {
         return totalscore;
     }
+    
 
     public int getScore(){
         return totalscore;
@@ -39,6 +43,10 @@ public class ScoardField extends javax.swing.JFrame {
     public ScoardField() {
         initComponents();
         thegame=new Game();
+        isTurn1.doClick();
+        fshoot.setText("");sshoot.setText("");tshoot.setText("");
+        resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
+        rules = new Rules();
     }
 
     /** This method is called from within the constructor to
@@ -108,21 +116,40 @@ public class ScoardField extends javax.swing.JFrame {
         teamscore2.setEditable(false);
         teamscore2.setText("501");
         teamscore2.setAutoscrolls(false);
+        teamscore2.setPreferredSize(new java.awt.Dimension(30, 19));
 
         hitsPanel.setBackground(new java.awt.Color(102, 102, 255));
         hitsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Round Hits"));
         hitsPanel.setMinimumSize(new java.awt.Dimension(150, 150));
 
         fshoot.setText("first shoot");
+        fshoot.setNextFocusableComponent(sshoot);
         fshoot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fshootActionPerformed(evt);
             }
         });
+        fshoot.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fshootFocusLost(evt);
+            }
+        });
 
         sshoot.setText("second shoot");
+        sshoot.setNextFocusableComponent(tshoot);
+        sshoot.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                sshootFocusLost(evt);
+            }
+        });
 
         tshoot.setText("third shoot");
+        tshoot.setNextFocusableComponent(scorebtn);
+        tshoot.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tshootFocusLost(evt);
+            }
+        });
 
         tareaNotes.setColumns(20);
         tareaNotes.setRows(5);
@@ -171,6 +198,7 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         scorebtn.setLabel("0");
+        scorebtn.setNextFocusableComponent(fshoot);
         scorebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 scorebtnActionPerformed(evt);
@@ -208,6 +236,9 @@ public class ScoardField extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
+
+        hitsPanelLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {fshoot, sshoot, tshoot});
+
         hitsPanelLayout.setVerticalGroup(
             hitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(hitsPanelLayout.createSequentialGroup()
@@ -237,6 +268,8 @@ public class ScoardField extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        hitsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {fshoot, sshoot, tshoot});
+
         helpbar.setBackground(new java.awt.Color(153, 204, 0));
         helpbar.setForeground(new java.awt.Color(102, 255, 102));
         helpbar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -246,9 +279,19 @@ public class ScoardField extends javax.swing.JFrame {
 
         resetbtn.setText("Reset");
         resetbtn.setActionCommand("resetbtn");
+        resetbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetbtnActionPerformed(evt);
+            }
+        });
 
         exitbtn.setText("Finish");
         exitbtn.setActionCommand("exitbtn");
+        exitbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitbtnActionPerformed(evt);
+            }
+        });
 
         isTurn2.setName("jradio2"); // NOI18N
 
@@ -275,17 +318,17 @@ public class ScoardField extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(teamlbl1)
                     .addComponent(teamlbl2))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(teamscore2)
-                    .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(teamscore2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(isTurn1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(isTurn2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hitsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(175, Short.MAX_VALUE)
                 .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -299,6 +342,9 @@ public class ScoardField extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(459, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {teamscore1, teamscore2});
+
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -315,7 +361,7 @@ public class ScoardField extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(teamlbl1)
-                                    .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(teamscore1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(52, 52, 52)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(teamlbl2)
@@ -330,8 +376,10 @@ public class ScoardField extends javax.swing.JFrame {
                         .addComponent(resetbtn)
                         .addComponent(exitbtn))
                     .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {teamscore1, teamscore2});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -344,13 +392,14 @@ private void radiox2r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             //TODO check input
             int getvalue=Integer.parseInt(fshoot.getText());
             int value=getvalue*2;
-            totalscore+=value;
+            totalscore=value; 
             String str=String.valueOf(value);
             String score=String.valueOf(totalscore);
             fshoot.setText(str);
             scorebtn.setText(score);
             radiox3r1.setEnabled(false);
             fshoot.setEditable(false);
+            resetradiobutton.add(radiox2r1);
         }
         else{
             radiox2r1.setEnabled(false);
@@ -364,13 +413,14 @@ private void radiox3r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             //TODO check input
             int getvalue=Integer.parseInt(fshoot.getText());
             int value=getvalue*3;
-            totalscore+=value;
+            totalscore=value;
             String str=String.valueOf(value);
             String score=String.valueOf(totalscore);
             fshoot.setText(str);
             scorebtn.setText(score);
             radiox2r1.setEnabled(false);
             fshoot.setEditable(false);
+            resetradiobutton.add(radiox3r1);
         }
         else{
             radiox3r1.setEnabled(false);
@@ -383,13 +433,14 @@ private void radiox2r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         //TODO check input
             int getvalue=Integer.parseInt(sshoot.getText());
             int value=getvalue*2;
-            totalscore+=value;
+            totalscore+=(value-getvalue);
             String str=String.valueOf(value);
             String score=String.valueOf(totalscore);
             sshoot.setText(str);
             scorebtn.setText(score);
             radiox3r2.setEnabled(false);
             sshoot.setEditable(false);
+            resetradiobutton.add(radiox2r2);
         }
         else{
             radiox2r2.setEnabled(false);
@@ -402,13 +453,14 @@ private void radiox3r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             //TODO check input
             int getvalue=Integer.parseInt(sshoot.getText());
             int value=getvalue*3;
-            totalscore+=value;
+            totalscore+=(value-getvalue);
             String str=String.valueOf(value);
             String score=String.valueOf(totalscore);
             sshoot.setText(str);
             scorebtn.setText(score);
             radiox2r2.setEnabled(false);
             sshoot.setEditable(false);
+            resetradiobutton.add(radiox3r2);
         }
         else{
             radiox3r2.setEnabled(false);
@@ -420,13 +472,14 @@ private void radiox2r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     if(radiox2r3.isSelected()){
             int getvalue=Integer.parseInt(tshoot.getText());
             int value=getvalue*2;
-            totalscore+=value;
+            totalscore+=(value-getvalue);
             String str=String.valueOf(value);
             String score=String.valueOf(totalscore);
             tshoot.setText(str);
             scorebtn.setText(score);
             radiox3r3.setEnabled(false);
             tshoot.setEditable(false);
+            resetradiobutton.add(radiox2r3);
         }
         else{
             radiox2r3.setEnabled(false);
@@ -439,13 +492,14 @@ private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
             //TODO check input
             int getvalue=Integer.parseInt(tshoot.getText());
             int value=getvalue*3;
-            totalscore+=value;
+            totalscore+=(value-getvalue);
             String str=String.valueOf(value);
             String score=String.valueOf(totalscore);
             tshoot.setText(str);
             scorebtn.setText(score);
             radiox2r3.setEnabled(false);
             tshoot.setEditable(false);
+            resetradiobutton.add(radiox3r3);
         }
         else{
             radiox3r3.setEnabled(false);
@@ -455,26 +509,109 @@ private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
 
 private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scorebtnActionPerformed
 // TODO add your handling code here:
+    
     if (isTurn1.isSelected()){
         
-        teamlbl1.setText(scorebtn.getText());
-        isTurn2.enableInputMethods(false);
+        reduceTeamScore1();
     }
     else 
         if(isTurn2.isSelected()){
         
-        teamlbl1.setText(scorebtn.getText());
-        isTurn1.enableInputMethods(false);
+        reduceTeamScore2();
     }
+    reset();
+    reverseTurn();
+     
+     
 }//GEN-LAST:event_scorebtnActionPerformed
 
 private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fshootActionPerformed
-// TODO add your handling code here:
-    if (fshoot.getAction()!=null){
-        scorebtn.setText(fshoot.getText());
-        
-    }
+
 }//GEN-LAST:event_fshootActionPerformed
+
+    private void fshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fshootFocusLost
+        // TODO add your handling code here:
+        String txt =fshoot.getText();
+        int tempnum = Integer.parseInt(txt);
+        totalscore+=tempnum;
+        String finalcal = String.valueOf(totalscore);
+        scorebtn.setText(finalcal);
+    }//GEN-LAST:event_fshootFocusLost
+
+    private void sshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sshootFocusLost
+        // TODO add your handling code here:
+        String txt =sshoot.getText();
+        int tempnum = Integer.parseInt(txt);
+        totalscore+=tempnum;
+        String finalcal = String.valueOf(totalscore);
+        scorebtn.setText(finalcal);
+    }//GEN-LAST:event_sshootFocusLost
+
+    private void tshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tshootFocusLost
+         // TODO add your handling code here:
+        String txt =tshoot.getText();
+        int tempnum = Integer.parseInt(txt);
+        totalscore+=tempnum;
+        String finalcal = String.valueOf(totalscore);
+        scorebtn.setText(finalcal);
+    }//GEN-LAST:event_tshootFocusLost
+
+    private void resetbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetbtnActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_resetbtnActionPerformed
+
+    private void exitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitbtnActionPerformed
+        // TODO need check for incomplete game exit call:
+        System.exit(0);
+    }//GEN-LAST:event_exitbtnActionPerformed
+
+public synchronized void reduceTeamScore1(){
+    /*while(btnavailability==true){
+            try {
+                wait();
+            } catch (InterruptedException ex) { }*/
+            //isTurn1.doClick();
+            //isTurn2.setEnabled(false);
+       teamScore1-=Integer.parseInt(scorebtn.getText());
+       String parseVal = Integer.toString(teamScore1);
+        teamscore1.setText(parseVal);
+        btnavailability=true;
+        notifyAll();
+   // }
+}
+
+public synchronized void reduceTeamScore2(){
+   /* while(btnavailability==false){
+            try {
+                wait();
+            } catch (InterruptedException ex) { }
+            isTurn2.doClick();*/
+            //isTurn1.setEnabled(false);
+       teamScore2-=totalscore;
+       String parseVal = Integer.toString(teamScore2);
+        teamscore2.setText(parseVal);
+        btnavailability=false;
+        notifyAll();
+    //}
+}
+
+private void reset() {
+        totalscore=0;
+        fshoot.setText("0");sshoot.setText("0");tshoot.setText("0");
+        for(javax.swing.JRadioButton bt:resetradiobutton){
+              bt.doClick();
+        }
+        fshoot.setEditable(true);sshoot.setEditable(true);tshoot.setEditable(true);
+        radiox2r1.setEnabled(true); radiox2r2.setEnabled(true); radiox2r3.setEnabled(true);
+        radiox3r1.setEnabled(true);radiox3r2.setEnabled(true);radiox3r3.setEnabled(true);
+        scorebtn.setText("0");
+    }
+
+ private void reverseTurn() {
+        isTurn1.doClick();
+        isTurn2.doClick();
+    }
 
     /**
      * @param args the command line arguments
@@ -506,24 +643,32 @@ private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
-                new ScoardField().setVisible(true);
+            @Override
+           public void run() {
+                ScoardField fld =new ScoardField();
+                fld.setVisible(true);
+                
             }
         });
-        ScoardTeam t1 = new ScoardTeam("player1");
-        ScoardTeam t2 = new ScoardTeam("player2");
-        Thread playA =
-        Game velakia = new Game(t1,t2);
+        //ScoardTeam t1 = new ScoardTeam("player1");
+        //ScoardTeam t2 = new ScoardTeam("player2");
+        //Thread playA =
+       // Game velakia = new Game(t1,t2);
         
-        velakia.register(new ScoardTeam("Team A"));
-        velakia.register(new ScoardTeam("Team B"));
+        //velakia.register(new ScoardTeam("Team A"));
+        //velakia.register(new ScoardTeam("Team B"));
+        
         
     }
     
-    private int teamScore1;
-    private int teamScore2;
+    private int teamScore1=501;
+    private int teamScore2=501;
     private static int totalscore=0;
+    private boolean btnavailability1=true;
+    private boolean btnavailability=false;
     private Game thegame;
+    private ArrayList<javax.swing.JRadioButton> resetradiobutton;
+    private Rules rules;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;
@@ -557,4 +702,8 @@ private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private javax.swing.JTextField teamscore2;
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
+
+   
+
+    
 }

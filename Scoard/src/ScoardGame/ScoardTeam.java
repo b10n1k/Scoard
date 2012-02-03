@@ -33,7 +33,7 @@ public class ScoardTeam extends Player implements Runnable{
     }
     
     private synchronized int play(){
-        int[] points = new int[3];
+       // String points = ;
         int sum=0;
         while(enableToPlay=true){
             try {
@@ -42,10 +42,7 @@ public class ScoardTeam extends Player implements Runnable{
             } catch (InterruptedException ex) {
                 
             }
-            for(int i=0;i<3;i++){
-                    points[i]=getShoot();
-                    sum=+points[i];
-            }
+            
         }
         notifyAll();
         return getScore()-sum;
