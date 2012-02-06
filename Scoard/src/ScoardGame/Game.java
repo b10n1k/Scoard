@@ -13,15 +13,21 @@ import java.util.Vector;
  */
 public class Game {
     
-    public Game(){
+    Game(ScoardTeam t1, ScoardTeam t2, ScoardField darts) {
         teams=new Vector<ScoardTeam>();
-    }
-
-    Game(ScoardTeam t1, ScoardTeam t2) {
-        register(t1); register(t2);
+        this.darts = darts;
+        
+        register(t1); 
+        register(t2);
+        
+        for(ScoardTeam t:teams){
+            
+            new Thread(t).start();
+            
+        }
     }
     
-    public void register(ScoardTeam team){
+    private void register(ScoardTeam team){
         teams.add(team);
     }
     
@@ -31,7 +37,50 @@ public class Game {
     }
     
     public void startGame(){
-        //Thread t1 = new Thread(new teams.)
+        ScoardTeam playingNow= null;
+        
+        while(winner==""){
+            playingNow=teams.firstElement();
+           // for (ScoardTeam st : teams){
+                //int numOfPlayers = st.getNumOfPlayers();
+            if(darts.isTurn1.isSelected()){
+               
+               playingNow.updateScore(darts.returnLbl1());
+                System.out.println(darts.returnLbl1()+"  if(darts.isTurn1.isSelected");
+               darts.updateNotification(playingNow.displayStatus());
+            }else
+                if(darts.isTurn2.isSelected()){
+                    playingNow=teams.get(teams.indexOf(playingNow)+1);
+               playingNow.updateScore(darts.returnLbl2());
+               System.out.println(darts.returnLbl2()+"  if(darts.isTurn2.isSelected");
+               darts.updateNotification("b");
+                }
+            }
+        
+    }
+    
+    public void startGame2(){
+        ScoardTeam playingNow= null;
+        
+        while(winner==""){
+            playingNow=teams.firstElement();
+           // for (ScoardTeam st : teams){
+                //int numOfPlayers = st.getNumOfPlayers();
+            synchronized(this){
+            if(darts.isTurn1.isSelected()){
+               
+               playingNow.updateScore(this.storePoint);
+                System.out.println(darts.returnLbl1()+"  if(darts.isTurn1.isSelected");
+               darts.updateNotification(playingNow.displayStatus());
+            }else
+                if(darts.isTurn2.isSelected()){
+                    playingNow=teams.get(teams.indexOf(playingNow)+1);
+               playingNow.updateScore(this.storePoint);
+               System.out.println(darts.returnLbl2()+"  if(darts.isTurn2.isSelected");
+               darts.updateNotification(playingNow.displayStatus());
+                }
+            }
+        }
     }
     
     public void setStorePoint(int storePoint) {//private
@@ -42,7 +91,9 @@ public class Game {
         return storePoint;
     }    
     
+    protected static ScoardField darts;
     private Vector<ScoardTeam> teams;
-    private int storePoint;
+    private static int storePoint;
     Thread play;
+    private String winner="";
 }

@@ -1,0 +1,4 @@
+[autorun]
+	open = java -jar Scoard.jar
+  	shell\install\command = java -jar Scoard.jar
+  	icon = Scoard_logo.jpeg

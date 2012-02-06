@@ -4,8 +4,12 @@
  */
 package ScoardGame;
 
+//import ScoardUI.ScoardField;
 import ScoardUI.ScoardField;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,18 +20,17 @@ public class ScoardTeam extends Player implements Runnable{
     private ArrayList<String> players;
     private boolean enableToPlay;
     private int score;
+    private ScoardField sf;
+   // protected ScoardField darts;
     //private int tscore;
 
-    public ScoardTeam(String player) {
+    public ScoardTeam(String player, ScoardField sf) {
         super(player);
         players=new ArrayList<String>();
+        this.score=501;
+        this.sf=sf;
     }
 
-    @Override
-    public void run() {
-        
-        play();
-    }
     
     private synchronized int play(){
        // String points = ;
@@ -50,17 +53,32 @@ public class ScoardTeam extends Player implements Runnable{
         
     }
     
-    private int getShoot() {
-        return ScoardField.getValue();
+    public void updateScore(int score) {
+        this.score=score;
     }
 
-    public String displayStatus(int index) {
-        String name = getPlayerName(index);
-        return name+" : TeamScore : "+score;
+    public String displayStatus() {
+        //String name = players.get(index);
+        return super.getName() +" : "+score;
     }
 
     @Override
     protected String getPlayerName(int index) {
         return players.get(index);
     }
+
+    int getNumOfPlayers() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public void run() {
+        try {
+            sf.updateTeamVars(this, score);
+        } catch (InterruptedException ex) {
+            System.out.println("error:"+this.getName());
+        }
+    }
+    
+    
 }

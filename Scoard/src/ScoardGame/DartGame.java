@@ -47,13 +47,12 @@ public class DartGame {
          * 
          */
                 ScoardField fld =new ScoardField();
-                fld.setVisible(true);
                 
-                ScoardTeam t1 = new ScoardTeam("player1");
-                ScoardTeam t2 = new ScoardTeam("player2");
+                ScoardTeam t1 = new ScoardTeam("player1",fld);
+                ScoardTeam t2 = new ScoardTeam("player2",fld);
         
-                Game dart = new Game(t1,t2);
-                fld.updateNotification(t1.displayStatus(0));
+                Game dart = new Game(t1,t2, fld);
+                
           //  }
       //  });
         

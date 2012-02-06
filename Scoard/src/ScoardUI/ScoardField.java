@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -31,6 +31,16 @@ public class ScoardField extends javax.swing.JFrame {
         return totalscore;
     }
     
+    public int returnLbl1() throws NumberFormatException{
+        int sc = Integer.parseInt(teamscore1.getText());
+        return sc;
+    }
+    
+    public int returnLbl2() throws NumberFormatException{
+        int sc = Integer.parseInt(teamlbl1.getText());
+        return sc;
+    }
+    
     public void setScore(int sc){
         totalscore=sc;
     }
@@ -42,7 +52,8 @@ public class ScoardField extends javax.swing.JFrame {
     /** Creates new form ScoardField */
     public ScoardField() {
         initComponents();
-        thegame=new Game();
+        setVisible(true);
+        updateNotification("Lets play");
         isTurn1.doClick();
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
         resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
@@ -271,11 +282,13 @@ public class ScoardField extends javax.swing.JFrame {
         hitsPanelLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {fshoot, sshoot, tshoot});
 
         helpbar.setBackground(new java.awt.Color(153, 204, 0));
-        helpbar.setForeground(new java.awt.Color(102, 255, 102));
+        helpbar.setForeground(new java.awt.Color(102, 102, 102));
+        helpbar.setLabelFor(this);
         helpbar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         helpbar.setFocusable(false);
         helpbar.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        helpbar.setName("lblnotes"); // NOI18N
+        helpbar.setName(""); // NOI18N
+        helpbar.setVerifyInputWhenFocusTarget(false);
 
         resetbtn.setText("Reset");
         resetbtn.setActionCommand("resetbtn");
@@ -511,13 +524,18 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 // TODO add your handling code here:
     
     if (isTurn1.isSelected()){
-        
+        //btnavailability2=false;
         reduceTeamScore1();
+        
+        
+        //updateNotification("aa");
     }
     else 
         if(isTurn2.isSelected()){
         
         reduceTeamScore2();
+        
+        //updateNotification("bb");
     }
     reset();
     reverseTurn();
@@ -531,27 +549,36 @@ private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
 
     private void fshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fshootFocusLost
         // TODO add your handling code here:
+        try{
         String txt =fshoot.getText();
         int tempnum = Integer.parseInt(txt);
         totalscore+=tempnum;
+        }
+        catch(NumberFormatException nfe){}
         String finalcal = String.valueOf(totalscore);
         scorebtn.setText(finalcal);
     }//GEN-LAST:event_fshootFocusLost
 
     private void sshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sshootFocusLost
         // TODO add your handling code here:
+        try{
         String txt =sshoot.getText();
         int tempnum = Integer.parseInt(txt);
         totalscore+=tempnum;
+        }
+        catch(NumberFormatException nfe){}
         String finalcal = String.valueOf(totalscore);
         scorebtn.setText(finalcal);
     }//GEN-LAST:event_sshootFocusLost
 
     private void tshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tshootFocusLost
          // TODO add your handling code here:
+        try{
         String txt =tshoot.getText();
         int tempnum = Integer.parseInt(txt);
         totalscore+=tempnum;
+        }
+        catch(NumberFormatException nfe){}
         String finalcal = String.valueOf(totalscore);
         scorebtn.setText(finalcal);
     }//GEN-LAST:event_tshootFocusLost
@@ -573,10 +600,11 @@ public synchronized void reduceTeamScore1(){
             } catch (InterruptedException ex) { }*/
             //isTurn1.doClick();
             //isTurn2.setEnabled(false);
+    System.out.println("in reduceTeamScore1");
        teamScore1-=Integer.parseInt(scorebtn.getText());
        String parseVal = Integer.toString(teamScore1);
         teamscore1.setText(parseVal);
-        btnavailability=true;
+        btnavailability2=true;
         notifyAll();
    // }
 }
@@ -588,17 +616,18 @@ public synchronized void reduceTeamScore2(){
             } catch (InterruptedException ex) { }
             isTurn2.doClick();*/
             //isTurn1.setEnabled(false);
+    System.out.println("in reduceTeamScore2");
        teamScore2-=totalscore;
        String parseVal = Integer.toString(teamScore2);
         teamscore2.setText(parseVal);
-        btnavailability=false;
+        btnavailability1=true;
         notifyAll();
     //}
 }
 
 private void reset() {
         totalscore=0;
-        fshoot.setText("0");sshoot.setText("0");tshoot.setText("0");
+        fshoot.setText("");sshoot.setText("");tshoot.setText("");
         for(javax.swing.JRadioButton bt:resetradiobutton){
               bt.doClick();
         }
@@ -614,25 +643,51 @@ private void reset() {
     }
 
  public void updateNotification(String msg){
-     helpbar.setText(msg);
+     synchronized(helpbar){
+        helpbar.setText(msg);
+        System.out.println(msg);
+        helpbar.validate();
+     }
+     
  }
+ 
+ public synchronized void updateTeamVars(ScoardTeam aThis, int val) throws InterruptedException {
+     while(btnavailability2==false){
+         wait();
+     }
+         //btnavailability=false;
+         aThis.updateScore(val);
+         helpbar.setText(aThis.displayStatus());
+         System.out.println("in updateTeamVars");
+         btnavailability2=true;
+         System.out.println("");
+         notifyAll();
+    }
+ 
+ public void setMsgText(String str){
+     synchronized(helpbar){
+        helpbar.setText(str);
+     }
+ }
+ 
     
     private int teamScore1=501;
     private int teamScore2=501;
     private static int totalscore=0;
     private boolean btnavailability1=true;
-    private boolean btnavailability=false;
+    private boolean btnavailability2=false;
     private Game thegame;
     private ArrayList<javax.swing.JRadioButton> resetradiobutton;
     private Rules01 rules;
+    protected String msg="";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;
     private javax.swing.JTextField fshoot;
-    private javax.swing.JLabel helpbar;
+    public static javax.swing.JLabel helpbar;
     private javax.swing.JPanel hitsPanel;
-    private javax.swing.JRadioButton isTurn1;
-    private javax.swing.JRadioButton isTurn2;
+    public javax.swing.JRadioButton isTurn1;
+    public javax.swing.JRadioButton isTurn2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -659,7 +714,6 @@ private void reset() {
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
 
-   
-
     
+   
 }

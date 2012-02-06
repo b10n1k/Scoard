@@ -12,4 +12,32 @@
 
 
 
-This is a scoreboard application for velakia. 
+This is a scoreboard application for dart. 
+
+How it is played:
+
+
+  -- 301--
+  
+   Dart Rules01 for '01 Games 
+ 
+   Number of Players: Any number of players may play, but normally two individuals or two teams play.
+ 
+   Numbers in Play: All the numbers are in play, but some receive greater use than others.  The 19 and 20, for instance are used extensively for scoring points since they are the highest numbers on the dartboard.  All the numbers may be used to throw the necessary doubles in the game.
+  
+   This game is generally played by two people but can be played by teams. Each player starts with 301 points. The goal for each player is to reach zero, exactly, by subtracting the amount they score in a turn from the amount they had left from the previous turn. The player cannot start subtracting until they double in (hits one of the 21 doubles on the dartboard including the double bull). Once the double is hit, then all scores will count. To end the game, the player must also double out (ie. If they have 32 left, then they will need to hit a double 16 to win. If they then hit a single sixteen, leaving 16, their next target would be a double 8. If they should hit more points than they have left, then they have busted. Their turn is over and they will resume with the same score they started with on that throw the next time it is their turn to throw.). If they hit the double leaving them zero points, then they have won the game.
+  
+  -- 501--
+  
+   Number of Players: Any number of players may play, but normally two individuals or two teams play.
+  
+   Numbers in Play: All the numbers are in play, but some receive greater use than others.  The 19 and 20, for instance are used extensively for scoring points since they are the highest number on the dartboard.  All the numbers may be used to throw the necessary doubles in the game.
+  
+  This game is generally played as a team event, though we also play it in our single events. All players/teams start with 501 points. Unlike 301, you do not have to double-in, but can start on any number. Each player/team subtracts the amount they score from the amount they have left. To win, like 301 above, the player/team will need to double-out to reach zero.
+ 
+--------------------------------------------------------------------------------------------------------------------->>
+
+The Scoard
+
+The Scoard is a board which is used for track the score of the game. It has a quite simple interface and its usage is very clear with a glance.
+The only thing that you have to do is type the points in every round and push the button to store the subtracked score into the appropriate team field. The bar in the botton can help you displaying messages and tips for finishing shoot. 
