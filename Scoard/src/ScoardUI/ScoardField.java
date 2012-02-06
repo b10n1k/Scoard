@@ -660,7 +660,7 @@ private void reset() {
          helpbar.setText(aThis.displayStatus());
          System.out.println("in updateTeamVars");
          btnavailability2=true;
-         System.out.println("");
+         
          notifyAll();
     }
  
