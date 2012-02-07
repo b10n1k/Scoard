@@ -21,6 +21,7 @@ public class ScoardTeam extends Player implements Runnable{
     private boolean enableToPlay;
     private int score;
     private ScoardField sf;
+    
    // protected ScoardField darts;
     //private int tscore;
 
@@ -73,10 +74,12 @@ public class ScoardTeam extends Player implements Runnable{
 
     @Override
     public void run() {
+        while(Game.haveWinner()){
         try {
             sf.updateTeamVars(this, score);
         } catch (InterruptedException ex) {
             System.out.println("error:"+this.getName());
+        }
         }
     }
     

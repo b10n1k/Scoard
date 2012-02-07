@@ -604,7 +604,7 @@ public synchronized void reduceTeamScore1(){
        teamScore1-=Integer.parseInt(scorebtn.getText());
        String parseVal = Integer.toString(teamScore1);
         teamscore1.setText(parseVal);
-        btnavailability2=true;
+      //  btnavailability2=true;
         notifyAll();
    // }
 }
@@ -620,7 +620,7 @@ public synchronized void reduceTeamScore2(){
        teamScore2-=totalscore;
        String parseVal = Integer.toString(teamScore2);
         teamscore2.setText(parseVal);
-        btnavailability1=true;
+      //  btnavailability1=true;
         notifyAll();
     //}
 }
@@ -652,14 +652,14 @@ private void reset() {
  }
  
  public synchronized void updateTeamVars(ScoardTeam aThis, int val) throws InterruptedException {
-     while(btnavailability2==false){
+     while(btnavailability==false){
          wait();
      }
-         //btnavailability=false;
+         btnavailability=false;
          aThis.updateScore(val);
          helpbar.setText(aThis.displayStatus());
          System.out.println("in updateTeamVars");
-         btnavailability2=true;
+         btnavailability=true;
          
          notifyAll();
     }
@@ -674,7 +674,7 @@ private void reset() {
     private int teamScore1=501;
     private int teamScore2=501;
     private static int totalscore=0;
-    private boolean btnavailability1=true;
+    private boolean btnavailability=true;
     private boolean btnavailability2=false;
     private Game thegame;
     private ArrayList<javax.swing.JRadioButton> resetradiobutton;

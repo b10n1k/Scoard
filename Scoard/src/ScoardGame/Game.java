@@ -91,9 +91,16 @@ public class Game {
         return storePoint;
     }    
     
+    protected static boolean haveWinner(){
+    if(winner!=null){
+        return true;
+    }
+    return false;
+}
+    
     protected static ScoardField darts;
     private Vector<ScoardTeam> teams;
     private static int storePoint;
-    Thread play;
-    private String winner="";
+    
+    public static String winner="";
 }
