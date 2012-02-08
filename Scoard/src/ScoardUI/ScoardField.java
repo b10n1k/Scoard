@@ -609,12 +609,7 @@ public synchronized void reduceTeamScore1(){
 }
 
 public synchronized void reduceTeamScore2(){
-   /* while(btnavailability==false){
-            try {
-                wait();
-            } catch (InterruptedException ex) { }
-            isTurn2.doClick();*/
-            //isTurn1.setEnabled(false);
+  
     System.out.println("in reduceTeamScore2");
        teamScore2-=totalscore;
        String parseVal = Integer.toString(teamScore2);
