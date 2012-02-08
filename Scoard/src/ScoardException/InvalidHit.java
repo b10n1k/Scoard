@@ -5,7 +5,7 @@
 package ScoardException;
 
 /**
- *
+*
  * @author j0ni
  */
 public class InvalidHit extends Exception{
@@ -15,6 +15,7 @@ public class InvalidHit extends Exception{
     }
 
     public InvalidHit() {
+        
     }
     
     private String errmsg="";

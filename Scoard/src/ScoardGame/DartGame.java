@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * This is the class that calls the main. Create a ScoardField and start the game.
+ * 
  */
 package ScoardGame;
 
@@ -10,6 +10,7 @@ import ScoardUI.ScoardField;
 /**
  *
  * @author j0ni
+ * @version 1.2
  */
 public class DartGame {
         /**
@@ -39,26 +40,7 @@ public class DartGame {
         }
         //</editor-fold>
 
-        /* Create and display the form 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-           public void run() {
-         * 
-         */
-                ScoardField fld =new ScoardField();
-                
-                ScoardTeam t1 = new ScoardTeam("player1",fld);
-                ScoardTeam t2 = new ScoardTeam("player2",fld);
-        
-                Game dart = new Game(t1,t2, fld);
-                
-          //  }
-      //  });
-        
-        
-        
-        
-        
+                new ScoardField();
+  
     }
 }

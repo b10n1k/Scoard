@@ -4,6 +4,8 @@
  */
 package ScoardGame;
 
+import ScoardException.InvalidHit;
+
 /**
  *
  * @author j0ni
@@ -11,7 +13,7 @@ package ScoardGame;
 public interface GameRules {
     
     public boolean hasFinished(int hit);
-    public boolean isValid();
+    public boolean isValid(int hit) throws InvalidHit;
     
     
     public boolean canFinish();

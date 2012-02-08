@@ -1,30 +1,39 @@
  /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * The Scoardfield is the scoreboard of darts game.
+ * You put your shoot score in each field, select the ratio button 
+ * if you hit a double or trible point and push the button. This 
+ * immediately store your score in your textfield and prepares for next 
+ * player. In the bottom there is a label which inform you every time.
  */
 
 /*
  * ScoardField.java
  *
  * Created on Jan 28, 2012, 5:51:32 PM
+ * 
  */
 package ScoardUI;
 
+import ScoardException.InvalidHit;
 import ScoardGame.Game;
 import ScoardGame.Rules01;
 import ScoardGame.ScoardTeam;
-import java.awt.Desktop.Action;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author j0ni
+ * @version 1.3
+ * 
  */
 public class ScoardField extends javax.swing.JFrame {
 
     public static int getValue() {
         return totalscore;
     }
+    private ScoardTeam curr_player;
     
 
     public int getScore(){
@@ -37,7 +46,7 @@ public class ScoardField extends javax.swing.JFrame {
     }
     
     public int returnLbl2() throws NumberFormatException{
-        int sc = Integer.parseInt(teamlbl1.getText());
+        int sc = Integer.parseInt(teamscore2.getText());
         return sc;
     }
     
@@ -58,6 +67,8 @@ public class ScoardField extends javax.swing.JFrame {
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
         resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
         rules = new Rules01();
+        thegame=new Game(this);
+        this.curr_player=thegame.returnFirstTeam();
     }
 
     /** This method is called from within the constructor to
@@ -135,11 +146,6 @@ public class ScoardField extends javax.swing.JFrame {
 
         fshoot.setText("first shoot");
         fshoot.setNextFocusableComponent(sshoot);
-        fshoot.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fshootActionPerformed(evt);
-            }
-        });
         fshoot.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 fshootFocusLost(evt);
@@ -524,28 +530,18 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 // TODO add your handling code here:
     
     if (isTurn1.isSelected()){
-        //btnavailability2=false;
         reduceTeamScore1();
-        
-        
-        //updateNotification("aa");
+        this.curr_player.updateScore(this.returnLbl1());
+        this.helpbar.setText(curr_player.displayStatus());
     }
     else 
         if(isTurn2.isSelected()){
-        
         reduceTeamScore2();
-        
-        //updateNotification("bb");
+        this.curr_player.updateScore(this.returnLbl2());
     }
     reset();
-    reverseTurn();
-     
-     
+    reverseTurn(); 
 }//GEN-LAST:event_scorebtnActionPerformed
-
-private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fshootActionPerformed
-
-}//GEN-LAST:event_fshootActionPerformed
 
     private void fshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fshootFocusLost
         // TODO add your handling code here:
@@ -564,7 +560,10 @@ private void fshootActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         try{
         String txt =sshoot.getText();
         int tempnum = Integer.parseInt(txt);
-        totalscore+=tempnum;
+            try {
+                if (rules.isValid(tempnum))
+                totalscore+=tempnum;
+            } catch (InvalidHit ex) {} //Must change it because corrupt the programm
         }
         catch(NumberFormatException nfe){}
         String finalcal = String.valueOf(totalscore);
@@ -640,6 +639,14 @@ private void reset() {
  private void reverseTurn() {
         isTurn1.doClick();
         isTurn2.doClick();
+        if(isTurn1.isSelected()){
+        reversePlayer(thegame.returnFirstTeam());
+        this.helpbar.setText(curr_player.displayStatus());
+        }
+        else if(isTurn2.isSelected()){
+            reversePlayer(thegame.returnSecondTeam());
+        this.helpbar.setText(curr_player.displayStatus());
+        }
     }
 
  public void updateNotification(String msg){
@@ -704,15 +711,19 @@ private void reset() {
     private javax.swing.JRadioButton radiox3r3;
     private javax.swing.JButton resetbtn;
     private javax.swing.JMenuBar scoardMenu;
-    private javax.swing.JButton scorebtn;
+    public javax.swing.JButton scorebtn;
     private javax.swing.JTextField sshoot;
     private javax.swing.JTextArea tareaNotes;
     private javax.swing.JLabel teamlbl1;
     private javax.swing.JLabel teamlbl2;
-    private javax.swing.JTextField teamscore1;
-    private javax.swing.JTextField teamscore2;
+    public javax.swing.JTextField teamscore1;
+    public javax.swing.JTextField teamscore2;
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
+
+    private void reversePlayer(ScoardTeam pl) {
+        curr_player=pl;
+    }
 
     
    

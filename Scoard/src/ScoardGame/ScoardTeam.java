@@ -76,8 +76,8 @@ public class ScoardTeam extends Player implements Runnable{
     public void run() {
         while(Game.haveWinner()){
         try {
-            sf.updateTeamVars(this, score);
-        } catch (InterruptedException ex) {
+           // main_play_a(ScoardTeam team)
+        } catch (Exception ex) {
             System.out.println("error:"+this.getName());
         }
         }

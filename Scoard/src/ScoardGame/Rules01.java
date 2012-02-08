@@ -93,6 +93,7 @@
  */
 package ScoardGame;
 
+import ScoardException.InvalidHit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -100,7 +101,7 @@ import java.util.Arrays;
  *
  * @author j0ni
  */
-public final class Rules01 implements GameRules{
+public final class Rules01 extends InvalidHit implements GameRules{
 
     private ArrayList<Integer> availableNum ;
     private int finishit=0;
@@ -117,8 +118,11 @@ public final class Rules01 implements GameRules{
     }
 
     @Override
-    public boolean isValid() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean isValid(int hit) throws InvalidHit {
+        if(!availableNum.contains(hit)) 
+            throw new InvalidHit("Out of the range!!");
+        else
+            return true;
     }
 
     @Override
