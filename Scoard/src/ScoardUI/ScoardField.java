@@ -21,6 +21,7 @@ import ScoardGame.ScoardTeam;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -62,7 +63,6 @@ public class ScoardField extends javax.swing.JFrame {
     public ScoardField() {
         initComponents();
         setVisible(true);
-        updateNotification("Lets play");
         isTurn1.doClick();
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
         resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
@@ -548,26 +548,44 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         try{
         String txt =fshoot.getText();
         int tempnum = Integer.parseInt(txt);
-        totalscore+=tempnum;
+            if(rules.isValid(tempnum)){
+                totalscore+=tempnum;
+                String finalcal = String.valueOf(totalscore);
+                scorebtn.setText(finalcal);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
+                        + " Retype the correct.\n"
+                        + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
+                fshoot.setText("");
+                fshoot.requestFocus();//
+            }
         }
         catch(NumberFormatException nfe){}
-        String finalcal = String.valueOf(totalscore);
-        scorebtn.setText(finalcal);
+        
     }//GEN-LAST:event_fshootFocusLost
 
     private void sshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sshootFocusLost
         // TODO add your handling code here:
-        try{
+
         String txt =sshoot.getText();
         int tempnum = Integer.parseInt(txt);
             try {
-                if (rules.isValid(tempnum))
+                if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
-            } catch (InvalidHit ex) {} //Must change it because corrupt the programm
+                String finalcal = String.valueOf(totalscore);
+                scorebtn.setText(finalcal);
+                }
+                else{
+                JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
+                        + " Retype the correct.\n"
+                        + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION );
+                fshoot.setText("");
+                fshoot.requestFocus();//
+            }
         }
         catch(NumberFormatException nfe){}
-        String finalcal = String.valueOf(totalscore);
-        scorebtn.setText(finalcal);
+        
     }//GEN-LAST:event_sshootFocusLost
 
     private void tshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tshootFocusLost
@@ -575,16 +593,25 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         try{
         String txt =tshoot.getText();
         int tempnum = Integer.parseInt(txt);
-        totalscore+=tempnum;
-        }
+            if(rules.isValid(tempnum)){
+                totalscore+=tempnum;
+                String finalcal = String.valueOf(totalscore);
+                scorebtn.setText(finalcal);
+            }        
+            else{
+                JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
+                        + " Retype the correct.\n"
+                        + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
+                fshoot.setText("");
+                fshoot.requestFocus();//
+                }
+            }
         catch(NumberFormatException nfe){}
-        String finalcal = String.valueOf(totalscore);
-        scorebtn.setText(finalcal);
     }//GEN-LAST:event_tshootFocusLost
 
     private void resetbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetbtnActionPerformed
         // TODO add your handling code here:
-        
+        reset();
     }//GEN-LAST:event_resetbtnActionPerformed
 
     private void exitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitbtnActionPerformed
@@ -592,31 +619,19 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         System.exit(0);
     }//GEN-LAST:event_exitbtnActionPerformed
 
-public synchronized void reduceTeamScore1(){
-    /*while(btnavailability==true){
-            try {
-                wait();
-            } catch (InterruptedException ex) { }*/
-            //isTurn1.doClick();
-            //isTurn2.setEnabled(false);
+public void reduceTeamScore1(){
     System.out.println("in reduceTeamScore1");
        teamScore1-=Integer.parseInt(scorebtn.getText());
        String parseVal = Integer.toString(teamScore1);
         teamscore1.setText(parseVal);
-      //  btnavailability2=true;
-        notifyAll();
-   // }
 }
 
-public synchronized void reduceTeamScore2(){
+public void reduceTeamScore2(){
   
     System.out.println("in reduceTeamScore2");
        teamScore2-=totalscore;
        String parseVal = Integer.toString(teamScore2);
         teamscore2.setText(parseVal);
-      //  btnavailability1=true;
-        notifyAll();
-    //}
 }
 
 private void reset() {
@@ -643,35 +658,10 @@ private void reset() {
         this.helpbar.setText(curr_player.displayStatus());
         }
     }
-
- public void updateNotification(String msg){
-     synchronized(helpbar){
-        helpbar.setText(msg);
-        System.out.println(msg);
-        helpbar.validate();
-     }
-     
- }
  
- public synchronized void updateTeamVars(ScoardTeam aThis, int val) throws InterruptedException {
-     while(btnavailability==false){
-         wait();
-     }
-         btnavailability=false;
-         aThis.updateScore(val);
-         helpbar.setText(aThis.displayStatus());
-         System.out.println("in updateTeamVars");
-         btnavailability=true;
-         
-         notifyAll();
+    private void reversePlayer(ScoardTeam pl) {
+        curr_player=pl;
     }
- 
- public void setMsgText(String str){
-     synchronized(helpbar){
-        helpbar.setText(str);
-     }
- }
- 
     
     private int teamScore1=501;
     private int teamScore2=501;
@@ -715,11 +705,4 @@ private void reset() {
     public javax.swing.JTextField teamscore2;
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
-
-    private void reversePlayer(ScoardTeam pl) {
-        curr_player=pl;
-    }
-
-    
-   
 }

@@ -101,13 +101,13 @@ import java.util.Arrays;
  *
  * @author j0ni
  */
-public final class Rules01 extends InvalidHit implements GameRules{
+public final class Rules01 implements GameRules{
 
-    private ArrayList<Integer> availableNum ;
+    private ArrayList<Integer> availableNum =new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,50));
     private int finishit=0;
     
     public Rules01() {
-        this.availableNum=new ArrayList<Integer>(Arrays.asList(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,25,50));
+        
     }
 
     @Override
@@ -118,26 +118,29 @@ public final class Rules01 extends InvalidHit implements GameRules{
     }
 
     @Override
-    public boolean isValid(int hit) throws InvalidHit {
-        if(!availableNum.contains(hit)) 
-            throw new InvalidHit("Out of the range!!");
-        else
+    public boolean isValid(int hit) {
+        if(availableNum.contains(hit)) 
             return true;
+         return false;
     }
 
     @Override
-    public boolean canFinish() {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public boolean canFinish(ScoardTeam team) {
+        int score = team.getScore();
+        if(score<=170) return true;
+        return false;
     }
 
     @Override
     public boolean isBull() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return false;
     }
 
      @Override
     public boolean isBurnedHit(int totalhit) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if(totalhit<0 || totalhit==1)
+            return true;
+        return false;
     }
 
     @Override

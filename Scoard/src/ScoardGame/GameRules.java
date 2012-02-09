@@ -16,7 +16,7 @@ public interface GameRules {
     public boolean isValid(int hit) throws InvalidHit;
     
     
-    public boolean canFinish();
+    public boolean canFinish(ScoardTeam team);
     
     public boolean isBull();
     public boolean isBurnedHit(int totalhit);
