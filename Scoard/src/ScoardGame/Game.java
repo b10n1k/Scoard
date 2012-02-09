@@ -54,7 +54,7 @@ public class Game {
         return true;
     }
     return false;
-}
+    }
     
     protected synchronized void main_play_a(ScoardTeam team){
         while(turn==false){

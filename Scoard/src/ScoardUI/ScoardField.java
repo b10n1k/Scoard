@@ -34,8 +34,6 @@ public class ScoardField extends javax.swing.JFrame {
     public static int getValue() {
         return totalscore;
     }
-    private ScoardTeam curr_player;
-    
 
     public int getScore(){
         return totalscore;
@@ -550,16 +548,29 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
-                String finalcal = String.valueOf(totalscore);
-                scorebtn.setText(finalcal);
-            }
-            else{
+                    if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
+                        String finalcal = String.valueOf(totalscore);
+                        scorebtn.setText(finalcal); 
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
+                        + " You gonna lose your turn.\n"
+                        + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
+                        totalscore=0;
+                        reset();
+                        reverseTurn(); 
+                   //??skip scorebtn function
+                   //do not store any score
+                   //returnPlayer
+                   //reset 
+                    }
+                }
+             else{
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
                 fshoot.setText("");
-                fshoot.requestFocus();//
-            }
+                }
         }
         catch(NumberFormatException nfe){}
         
@@ -569,22 +580,37 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
 
         String txt =sshoot.getText();
+        
         int tempnum = Integer.parseInt(txt);
             try {
                 if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
-                String finalcal = String.valueOf(totalscore);
-                scorebtn.setText(finalcal);
-                }
+                    if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
+                        String finalcal = String.valueOf(totalscore);
+                        scorebtn.setText(finalcal);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
+                            + " You gonna lose your turn.\n"
+                            + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
+                        totalscore=0;
+                        reset();
+                        reverseTurn(); 
+                   //??skip scorebtn function
+                  //do not store any score
+                   //returnPlayer
+                   //reset 
+                    }
+                }     
                 else{
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION );
+                //
                 fshoot.setText("");
-                fshoot.requestFocus();//
+                }
             }
-        }
-        catch(NumberFormatException nfe){}
+            catch(NumberFormatException nfe){}
         
     }//GEN-LAST:event_sshootFocusLost
 
@@ -595,17 +621,30 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
-                String finalcal = String.valueOf(totalscore);
-                scorebtn.setText(finalcal);
-            }        
-            else{
+                    if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
+                        String finalcal = String.valueOf(totalscore);
+                        scorebtn.setText(finalcal);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
+                            + " You gonna lose your turn.\n"
+                            + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
+                        totalscore=0;
+                        reset();
+                        reverseTurn(); 
+                   //??skip scorebtn function
+                   //do not store any score
+                   //returnPlayer
+                   //reset 
+                    }
+            }
+              else{
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
                 fshoot.setText("");
-                fshoot.requestFocus();//
                 }
-            }
+        }
         catch(NumberFormatException nfe){}
     }//GEN-LAST:event_tshootFocusLost
 
@@ -666,12 +705,12 @@ private void reset() {
     private int teamScore1=501;
     private int teamScore2=501;
     private static int totalscore=0;
-    private boolean btnavailability=true;
-    private boolean btnavailability2=false;
     private Game thegame;
     private ArrayList<javax.swing.JRadioButton> resetradiobutton;
     private Rules01 rules;
     protected String msg="";
+    private ScoardTeam curr_player;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;

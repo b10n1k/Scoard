@@ -44,6 +44,10 @@ public class ScoardTeam extends Player{
     protected String getPlayerName(int index) {
         return players.get(index);
     }
+    
+    public int getScore(){
+        return this.score;
+    }
 
     int getNumOfPlayers() {
         throw new UnsupportedOperationException("Not yet implemented");
