@@ -15,9 +15,11 @@
 package ScoardUI;
 
 import ScoardException.InvalidHit;
+import ScoardGame.DartGame;
 import ScoardGame.Game;
 import ScoardGame.Rules01;
 import ScoardGame.ScoardTeam;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,10 +107,11 @@ public class ScoardField extends javax.swing.JFrame {
         exitbtn = new javax.swing.JButton();
         isTurn2 = new javax.swing.JRadioButton();
         isTurn1 = new javax.swing.JRadioButton();
-        scoardMenu = new javax.swing.JMenuBar();
-        menu_file = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
-        menu_help = new javax.swing.JMenu();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        menu_newgame = new javax.swing.JMenuItem();
+        menu_docs = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -314,17 +317,33 @@ public class ScoardField extends javax.swing.JFrame {
 
         isTurn1.setName("jradio1"); // NOI18N
 
-        menu_file.setText("File");
+        jMenu3.setText("File");
 
-        jMenu5.setText("jMenu5");
-        menu_file.add(jMenu5);
+        menu_newgame.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        menu_newgame.setText("New Game");
+        menu_newgame.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_newgameActionPerformed(evt);
+            }
+        });
+        jMenu3.add(menu_newgame);
 
-        scoardMenu.add(menu_file);
+        jMenuBar2.add(jMenu3);
 
-        menu_help.setText("help");
-        scoardMenu.add(menu_help);
+        menu_docs.setText("Help");
 
-        setJMenuBar(scoardMenu);
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem2.setText("Docs");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menu_docs.add(jMenuItem2);
+
+        jMenuBar2.add(menu_docs);
+
+        setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -530,12 +549,14 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     if (isTurn1.isSelected()){
         reduceTeamScore1();
         this.curr_player.updateScore(this.returnLbl1());
-        this.helpbar.setText(curr_player.displayStatus());
+        
+       // this.helpbar.setText(curr_player.displayStatus());
     }
     else 
         if(isTurn2.isSelected()){
         reduceTeamScore2();
         this.curr_player.updateScore(this.returnLbl2());
+        //TODO helpbar setText()
     }
     reset();
     reverseTurn(); 
@@ -548,6 +569,12 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
+                if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
+                                tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                                thegame.finish();
+                            }
+                    
+                tareaNotes.setText(curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
                     if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
                         String finalcal = String.valueOf(totalscore);
                         scorebtn.setText(finalcal); 
@@ -585,10 +612,16 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
             try {
                 if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
+                if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
+                                tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                                thegame.finish();
+                            }
+                    
+                tareaNotes.setText(curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
                     if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
                         String finalcal = String.valueOf(totalscore);
                         scorebtn.setText(finalcal);
-                    }
+                            }
                     else{
                         JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
                             + " You gonna lose your turn.\n"
@@ -607,7 +640,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION );
                 //
-                fshoot.setText("");
+                sshoot.setText("");
                 }
             }
             catch(NumberFormatException nfe){}
@@ -621,10 +654,16 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
                 totalscore+=tempnum;
+                
+                if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
+                                tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                                thegame.finish();
+                            }
+                    tareaNotes.setText(curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
                     if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
                         String finalcal = String.valueOf(totalscore);
                         scorebtn.setText(finalcal);
-                    }
+                            }
                     else{
                         JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
                             + " You gonna lose your turn.\n"
@@ -642,7 +681,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
-                fshoot.setText("");
+                tshoot.setText("");
                 }
         }
         catch(NumberFormatException nfe){}
@@ -658,6 +697,18 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         System.exit(0);
     }//GEN-LAST:event_exitbtnActionPerformed
 
+    private void menu_newgameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_newgameActionPerformed
+  
+        try {
+            Runtime.getRuntime().exec("java -jar dist/Scoard.jar");
+        } catch (IOException ex) {}
+        System.exit(0); 
+    }//GEN-LAST:event_menu_newgameActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
 public void reduceTeamScore1(){
     System.out.println("in reduceTeamScore1");
        teamScore1-=Integer.parseInt(scorebtn.getText());
@@ -667,7 +718,7 @@ public void reduceTeamScore1(){
 
 public void reduceTeamScore2(){
   
-    System.out.println("in reduceTeamScore2");
+    System.out.println("in reduceTeamScore2");// delete line
        teamScore2-=totalscore;
        String parseVal = Integer.toString(teamScore2);
         teamscore2.setText(parseVal);
@@ -676,13 +727,37 @@ public void reduceTeamScore2(){
 private void reset() {
         totalscore=0;
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
+        
         for(javax.swing.JRadioButton bt:resetradiobutton){
               bt.doClick();
         }
+        
+        resetradiobutton.clear();
         fshoot.setEditable(true);sshoot.setEditable(true);tshoot.setEditable(true);
         radiox2r1.setEnabled(true); radiox2r2.setEnabled(true); radiox2r3.setEnabled(true);
         radiox3r1.setEnabled(true);radiox3r2.setEnabled(true);radiox3r3.setEnabled(true);
         scorebtn.setText("0");
+    }
+
+private void reset(boolean bool) {
+        totalscore=0;
+        fshoot.setText("");sshoot.setText("");tshoot.setText("");
+        
+        for(javax.swing.JRadioButton bt:resetradiobutton){
+              bt.doClick();
+        }
+        
+        resetradiobutton.clear();
+        fshoot.setEditable(bool);sshoot.setEditable(bool);tshoot.setEditable(bool);
+        radiox2r1.setEnabled(bool); radiox2r2.setEnabled(bool); radiox2r3.setEnabled(bool);
+        radiox3r1.setEnabled(bool);radiox3r2.setEnabled(bool);radiox3r3.setEnabled(bool);
+        scorebtn.setText("0");
+    }
+
+public void endGame() {
+    JOptionPane.showConfirmDialog(this, curr_player.getName()+", you are the Big WINNER!!\n"
+                + "Congrats!!!", "WINNER IS", JOptionPane.INFORMATION_MESSAGE);
+        reset(false);
     }
 
  private void reverseTurn() {
@@ -690,12 +765,13 @@ private void reset() {
         isTurn2.doClick();
         if(isTurn1.isSelected()){
         reversePlayer(thegame.returnFirstTeam());
-        this.helpbar.setText(curr_player.displayStatus());
+        this.helpbar.setText(thegame.checkout(curr_player.getScore()));
         }
         else if(isTurn2.isSelected()){
             reversePlayer(thegame.returnSecondTeam());
-        this.helpbar.setText(curr_player.displayStatus());
+        this.helpbar.setText(thegame.checkout(curr_player.getScore()));
         }
+        tareaNotes.setText("Now play > "+curr_player.getName()+" "+curr_player.getScore());
     }
  
     private void reversePlayer(ScoardTeam pl) {
@@ -722,11 +798,13 @@ private void reset() {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JMenu menu_file;
-    private javax.swing.JMenu menu_help;
+    private javax.swing.JMenu menu_docs;
+    private javax.swing.JMenuItem menu_newgame;
     private javax.swing.JRadioButton radiox2r1;
     private javax.swing.JRadioButton radiox2r2;
     private javax.swing.JRadioButton radiox2r3;
@@ -734,7 +812,6 @@ private void reset() {
     private javax.swing.JRadioButton radiox3r2;
     private javax.swing.JRadioButton radiox3r3;
     private javax.swing.JButton resetbtn;
-    private javax.swing.JMenuBar scoardMenu;
     public javax.swing.JButton scorebtn;
     private javax.swing.JTextField sshoot;
     private javax.swing.JTextArea tareaNotes;
@@ -744,4 +821,6 @@ private void reset() {
     public javax.swing.JTextField teamscore2;
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
+
+    
 }

@@ -13,6 +13,10 @@ import ScoardUI.ScoardField;
  * @version 1.2
  */
 public class DartGame {
+    
+    public DartGame(){
+        new ScoardField();
+    }
         /**
      * @param args the command line arguments
      */
@@ -38,9 +42,9 @@ public class DartGame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(ScoardField.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        //</editor-fold
 
-                new ScoardField();
+                new DartGame();
   
     }
 }

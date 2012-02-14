@@ -28,7 +28,7 @@ public abstract class Player {
         teamname=name;
     }
     
-    protected String getName(){
+    public String getName(){
         return teamname;
     }
     

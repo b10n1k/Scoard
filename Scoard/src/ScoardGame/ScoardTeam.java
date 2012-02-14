@@ -52,5 +52,12 @@ public class ScoardTeam extends Player{
     int getNumOfPlayers() {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    public boolean isWinner() {
+        return score==0;
+    }
     
+    public boolean isWinner(int value) {
+        return value==0;
+    }
 }
