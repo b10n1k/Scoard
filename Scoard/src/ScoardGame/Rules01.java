@@ -110,6 +110,11 @@ public final class Rules01 implements GameRules{
         
     }
 
+    /**
+     * 
+     * @param hit
+     * @return 
+     */
     @Override
     public boolean hasFinished(int hit) {
         if(hit==finishit) 
@@ -117,6 +122,11 @@ public final class Rules01 implements GameRules{
         return false;
     }
 
+    /**
+     * 
+     * @param hit
+     * @return 
+     */
     @Override
     public boolean isValid(int hit) {
         if(availableNum.contains(hit)) 
@@ -124,6 +134,11 @@ public final class Rules01 implements GameRules{
          return false;
     }
 
+    /**
+     * 
+     * @param team
+     * @return 
+     */
     @Override
     public boolean canFinish(ScoardTeam team) {
         int score = team.getScore();
@@ -131,11 +146,20 @@ public final class Rules01 implements GameRules{
         return false;
     }
 
+    /**
+     * 
+     * @return 
+     */
     @Override
     public boolean isBull() {
         return false;
     }
 
+    /**
+     * 
+     * @param totalhit
+     * @return 
+     */
      @Override
     public boolean isBurnedHit(int totalhit) {
         if(totalhit<0 || totalhit==1)
@@ -143,11 +167,20 @@ public final class Rules01 implements GameRules{
         return false;
     }
 
+     /**
+      * 
+      * @param hit
+      * @return 
+      */
     @Override
     public boolean isDouble(int hit) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * 
+     * @param nums 
+     */
     @Override
     public void setNumInPlay(int[] nums) {
         throw new UnsupportedOperationException("Not supported yet.");

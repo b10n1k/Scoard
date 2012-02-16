@@ -33,31 +33,6 @@ import javax.swing.JOptionPane;
  */
 public class ScoardField extends javax.swing.JFrame {
 
-    public static int getValue() {
-        return totalscore;
-    }
-
-    public int getScore(){
-        return totalscore;
-    }
-    
-    public int returnLbl1() throws NumberFormatException{
-        int sc = Integer.parseInt(teamscore1.getText());
-        return sc;
-    }
-    
-    public int returnLbl2() throws NumberFormatException{
-        int sc = Integer.parseInt(teamscore2.getText());
-        return sc;
-    }
-    
-    public void setScore(int sc){
-        totalscore=sc;
-    }
-    
-    private void setTeamScore(int sc){
-        thegame.setStorePoint(sc);
-    }
     
     /** Creates new form ScoardField */
     public ScoardField() {
@@ -421,7 +396,12 @@ public class ScoardField extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-
+/**
+     * This button component multiply the value of the first shoot by 2.
+     * You must not push it before entering the score in the field.
+     * 
+     * @param evt 
+     */
 private void radiox2r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r1ActionPerformed
     
         if(radiox2r1.isSelected()){
@@ -444,6 +424,12 @@ private void radiox2r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
     
 }//GEN-LAST:event_radiox2r1ActionPerformed
 
+/**
+     * This button component multiply the value of the first shoot by 3.
+ * You must not push it before entering the score in the field.
+     * 
+     * @param evt 
+     */
 private void radiox3r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r1ActionPerformed
     if(radiox3r1.isSelected()){
             //TODO check input
@@ -464,6 +450,11 @@ private void radiox3r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
 }//GEN-LAST:event_radiox3r1ActionPerformed
 
+/**
+     * This button component multiply the value of the second shoot by 2.
+     * You must not push it before entering the score in the field.
+     * @param evt 
+     */
 private void radiox2r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r2ActionPerformed
     if(radiox2r2.isSelected()){
         //TODO check input
@@ -484,6 +475,12 @@ private void radiox2r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
 }//GEN-LAST:event_radiox2r2ActionPerformed
 
+/**
+     * This button component multiply the value of the second shoot by 3.
+     * You must not push it before entering the score in the field.
+ * 
+     * @param evt 
+     */
 private void radiox3r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r2ActionPerformed
     if(radiox3r2.isSelected()){
             //TODO check input
@@ -504,6 +501,12 @@ private void radiox3r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
 }//GEN-LAST:event_radiox3r2ActionPerformed
 
+/**
+     * This button component multiply the value of the third shoot by 2.
+     * You must not push it before entering the score in the field.
+ * 
+     * @param evt 
+     */
 private void radiox2r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r3ActionPerformed
     if(radiox2r3.isSelected()){
             int getvalue=Integer.parseInt(tshoot.getText());
@@ -523,6 +526,12 @@ private void radiox2r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
 }//GEN-LAST:event_radiox2r3ActionPerformed
 
+/**
+     * This button component multiply the value of the third shoot by 3.
+     *You must not push it before entering the score in the field.
+ * 
+     * @param evt 
+     */
 private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r3ActionPerformed
     if(radiox3r3.isSelected()){
             //TODO check input
@@ -543,6 +552,14 @@ private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIR
         }
 }//GEN-LAST:event_radiox3r3ActionPerformed
 
+/**
+ * The button performs an calculation of the score of the 
+ * current player and stores it into his score label and into its player. It is 
+ * responsible to handle the player's rounds. This means that 
+ * after every action prepares the panel for the next player.
+ * 
+ * @param evt 
+ */
 private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scorebtnActionPerformed
 // TODO add your handling code here:
     
@@ -562,12 +579,30 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     reverseTurn(); 
 }//GEN-LAST:event_scorebtnActionPerformed
 
+/**
+ * fshootFocusLostis a Listener for Textfield which is assigned to
+ * the first shoot of the three ones. When you entered the score and pressed 
+ * the tab button or move the mouse somewhere else it adds the the current value 
+ * in the sum of the round. It accepts only numbers of the dartboard. 
+ * 
+ * Whenever there is a winner after the current shoot the game is finished.
+ * 
+ * Also it sets messages in the labels and changes appropriately the button value which 
+ * it is going to store in the player. This value is changed in the case that 2x radio or 
+ * 3x radio is selected. 
+ * 
+ * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
+ * message. In this senario the player losts his turn.
+ * 
+ * @param evt 
+ */
     private void fshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fshootFocusLost
         // TODO add your handling code here:
         try{
         String txt =fshoot.getText();
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
+                isCenter(tempnum,radiox2r1,radiox3r1);
                 totalscore+=tempnum;
                 if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
                                 tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
@@ -586,11 +621,8 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                         totalscore=0;
                         reset();
                         reverseTurn(); 
-                   //??skip scorebtn function
-                   //do not store any score
-                   //returnPlayer
-                   //reset 
                     }
+                    fshoot.setEnabled(false);
                 }
              else{
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
@@ -603,6 +635,21 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         
     }//GEN-LAST:event_fshootFocusLost
 
+/** 
+ *fshootFocusLostis a Listener for Textfield which is assigned to
+ * the second shoot of the three ones. When you entered the score and pressed 
+ * the tab button or move the mouse somewhere else it adds the the current value 
+ * in the sum of the round. It accepts only numbers of the dartboard. 
+ * 
+ * Whenever there is a winner after the current shoot the game is finished.
+ * 
+ * Also it sets messages in the labels and changes appropriately the button value which 
+ * it is going to store in the player. This value is changed in the case that 2x radio or 
+ * 3x radio is selected. 
+ * 
+ * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
+ * message. In this senario the player losts his turn.
+ */
     private void sshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sshootFocusLost
         // TODO add your handling code here:
 
@@ -611,6 +658,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         int tempnum = Integer.parseInt(txt);
             try {
                 if(rules.isValid(tempnum)){
+                    isCenter(tempnum,radiox2r2,radiox3r2);
                 totalscore+=tempnum;
                 if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
                                 tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
@@ -634,6 +682,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                    //returnPlayer
                    //reset 
                     }
+                    sshoot.setEnabled(false);
                 }     
                 else{
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
@@ -647,12 +696,28 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         
     }//GEN-LAST:event_sshootFocusLost
 
+/** 
+ *tshootFocusLostis a Listener for Textfield which is assigned to
+ * the third and last shoot of the three ones. When you entered the score and pressed 
+ * the tab button or move the mouse somewhere else it adds the the current value 
+ * in the sum of the round. It accepts only numbers of the dartboard. 
+ * 
+ * Whenever there is a winner after the current shoot the game is finished.
+ * 
+ * Also it sets messages in the labels and changes appropriately the button value which 
+ * it is going to store in the player. This value is changed in the case that 2x radio or 
+ * 3x radio is selected. 
+ * 
+ * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
+ * message. In this senario the player losts his turn.
+ */
     private void tshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tshootFocusLost
          // TODO add your handling code here:
         try{
         String txt =tshoot.getText();
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
+                isCenter(tempnum,radiox2r3,radiox3r3);
                 totalscore+=tempnum;
                 
                 if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
@@ -676,6 +741,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                    //returnPlayer
                    //reset 
                     }
+                    tshoot.setEnabled(false);
             }
               else{
                 JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
@@ -687,16 +753,35 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         catch(NumberFormatException nfe){}
     }//GEN-LAST:event_tshootFocusLost
 
+    /**
+     * resetbtnActionPerformed is the reset button Listener.
+     * Whenever press this button the current game is canceled and restart all over 
+     * from the start.
+     * 
+     * @param evt 
+     */
     private void resetbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetbtnActionPerformed
         // TODO add your handling code here:
         reset();
     }//GEN-LAST:event_resetbtnActionPerformed
 
+    /**
+     * exitbtnActionPerformed is the exit button Listener.
+     * This is close the application.
+     * 
+     * @param evt 
+     */
     private void exitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitbtnActionPerformed
         // TODO need check for incomplete game exit call:
         System.exit(0);
     }//GEN-LAST:event_exitbtnActionPerformed
 
+    /**
+     * MenuBar Item
+     * Start new Game
+     * 
+     * @param evt 
+     */
     private void menu_newgameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_newgameActionPerformed
   
         try {
@@ -705,10 +790,20 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         System.exit(0); 
     }//GEN-LAST:event_menu_newgameActionPerformed
 
+    /**
+     * Menubar Item
+     * Show the documantation and other help
+     * 
+     * @param evt 
+     */
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    /**
+     * It uses to reduce the score in textfield of the first team.
+     * 
+     */
 public void reduceTeamScore1(){
     System.out.println("in reduceTeamScore1");
        teamScore1-=Integer.parseInt(scorebtn.getText());
@@ -716,6 +811,10 @@ public void reduceTeamScore1(){
         teamscore1.setText(parseVal);
 }
 
+/**
+     * It uses to reduce the score in textfield of the second team.
+     * 
+     */
 public void reduceTeamScore2(){
   
     System.out.println("in reduceTeamScore2");// delete line
@@ -724,6 +823,10 @@ public void reduceTeamScore2(){
         teamscore2.setText(parseVal);
 }
 
+/**
+ * Performs the reset action of a previous action.
+ * TODO the code need to be improved 
+ */
 private void reset() {
         totalscore=0;
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
@@ -734,11 +837,17 @@ private void reset() {
         
         resetradiobutton.clear();
         fshoot.setEditable(true);sshoot.setEditable(true);tshoot.setEditable(true);
+        fshoot.setEnabled(true);sshoot.setEnabled(true);tshoot.setEnabled(true);
         radiox2r1.setEnabled(true); radiox2r2.setEnabled(true); radiox2r3.setEnabled(true);
         radiox3r1.setEnabled(true);radiox3r2.setEnabled(true);radiox3r3.setEnabled(true);
         scorebtn.setText("0");
     }
 
+/**
+ * Performs the reset action of a previous action selecting 
+ * the condition.
+ * TODO the code need to be improved 
+ */
 private void reset(boolean bool) {
         totalscore=0;
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
@@ -749,17 +858,24 @@ private void reset(boolean bool) {
         
         resetradiobutton.clear();
         fshoot.setEditable(bool);sshoot.setEditable(bool);tshoot.setEditable(bool);
+        fshoot.setEnabled(bool);sshoot.setEnabled(bool);tshoot.setEnabled(bool);
         radiox2r1.setEnabled(bool); radiox2r2.setEnabled(bool); radiox2r3.setEnabled(bool);
         radiox3r1.setEnabled(bool);radiox3r2.setEnabled(bool);radiox3r3.setEnabled(bool);
         scorebtn.setText("0");
     }
 
+/**
+ * Display the winner and finish the game.
+ */
 public void endGame() {
     JOptionPane.showConfirmDialog(this, curr_player.getName()+", you are the Big WINNER!!\n"
                 + "Congrats!!!", "WINNER IS", JOptionPane.INFORMATION_MESSAGE);
         reset(false);
     }
 
+/**
+ * Change the turn in each round.
+ */
  private void reverseTurn() {
         isTurn1.doClick();
         isTurn2.doClick();
@@ -774,8 +890,53 @@ public void endGame() {
         tareaNotes.setText("Now play > "+curr_player.getName()+" "+curr_player.getScore());
     }
  
+ /**
+  * @param pl The player who is turn
+  */
     private void reversePlayer(ScoardTeam pl) {
         curr_player=pl;
+    }
+    
+    /**
+     * Control the behavior if the shoot hits the center of the dartboard.
+     * @param tempnum take the value of the shoot.
+     * @param a2 JRadioButton (x2) which is effected
+     * @param a3 JRadioButton (x2) which is effected
+     */
+    private void isCenter(int tempnum, javax.swing.JRadioButton a2, javax.swing.JRadioButton a3 ) {
+        if(tempnum==25 || tempnum==50){
+            a2.setEnabled(false); a3.setEnabled(false); 
+        }
+    }
+
+    /**
+     * 
+     * @return The calculated score of each turn.
+     */
+    public int getScore(){
+        return totalscore;
+    }
+    
+    /**
+     * It focus to give back the stored score of first team
+     * 
+     * @return the score of the first team
+     * @throws NumberFormatException 
+     */
+    public int returnLbl1() throws NumberFormatException{
+        int sc = Integer.parseInt(teamscore1.getText());
+        return sc;
+    }
+    
+    /**
+     * It focus to give back the stored score of second team
+     * 
+     * @return the score of the second team
+     * @throws NumberFormatException 
+     */
+    public int returnLbl2() throws NumberFormatException{
+        int sc = Integer.parseInt(teamscore2.getText());
+        return sc;
     }
     
     private int teamScore1=501;
