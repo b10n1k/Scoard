@@ -17,11 +17,13 @@ import java.util.ArrayList;
 public class ScoardTeam extends Player{
     
     //Variables
-    private ArrayList<String> players;
+    private ArrayList<String> players = null;
     private boolean enableToPlay;
     private int score;
     private ScoardField sf;
-    
+    private int index;
+    private String curr;
+
     /**
      * Class Constructor 
      * @param player The player's name.
@@ -32,6 +34,8 @@ public class ScoardTeam extends Player{
         players=new ArrayList<String>();
         this.score=501;
         this.sf=sf;
+        this.index=0;
+        //this.curr=players.get(index);
     }
 
     /**
@@ -39,9 +43,19 @@ public class ScoardTeam extends Player{
      * 
      * @param name The name of the new player.
      */
-    protected void addPlayer(String name){
+    public void addPlayer(String name){
         players.add(name);
         
+    }
+    
+    public String getPlayer(){
+        if((index%getNumOfPlayers())==0)
+            this.curr=players.get(index++);
+        else {
+            this.curr=players.get(index);
+            index=0;
+        }
+        return curr;
     }
     
     /**
@@ -67,7 +81,7 @@ public class ScoardTeam extends Player{
      * @return The player's name.
      */
     @Override
-    protected String getPlayerName(int index) {
+    public String getPlayerName(int index) {
         return players.get(index);
     }
     
@@ -84,7 +98,7 @@ public class ScoardTeam extends Player{
      * @return 
      */
     public int getNumOfPlayers() {
-        throw new UnsupportedOperationException("Not yet implemented");
+        return players.size();
     }
 
     /**

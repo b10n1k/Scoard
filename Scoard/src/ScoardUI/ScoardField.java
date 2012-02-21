@@ -21,8 +21,6 @@ import ScoardGame.Rules01;
 import ScoardGame.ScoardTeam;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -36,16 +34,29 @@ public class ScoardField extends javax.swing.JFrame {
     
     /** Creates new form ScoardField */
     public ScoardField() {
+        super("DartsBoard");
+        initComponents();
+        //setVisible(true);
+        isTurn1.doClick();
+        fshoot.setText("");sshoot.setText("");tshoot.setText("");
+        resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
+        rules = new Rules01();
+        //thegame=new Game(this);
+        
+    }
+
+    /** Creates new form ScoardField */
+    public ScoardField(Game game) {
+        super("DartsBoard");
         initComponents();
         setVisible(true);
         isTurn1.doClick();
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
         resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
         rules = new Rules01();
-        thegame=new Game(this);
+        thegame=game;
         this.curr_player=thegame.returnFirstTeam();
     }
-
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -566,13 +577,20 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     if (isTurn1.isSelected()){
         reduceTeamScore1();
         this.curr_player.updateScore(this.returnLbl1());
-        
-       // this.helpbar.setText(curr_player.displayStatus());
+        tareaNotes.append(curr_player.getPlayer()+" scores \t"+totalscore+"\n");
+        if(curr_player.isWinner(this.curr_player.getScore())){
+            thegame.finish();
+        }
+        //this.helpbar.setText(curr_player.displayStatus());
     }
     else 
         if(isTurn2.isSelected()){
         reduceTeamScore2();
         this.curr_player.updateScore(this.returnLbl2());
+        tareaNotes.append(curr_player.getPlayer()+" scores \t"+totalscore+"\n");
+        if(curr_player.isWinner(this.curr_player.getScore())){
+            thegame.finish();
+        }
         //TODO helpbar setText()
     }
     reset();
@@ -599,17 +617,18 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void fshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fshootFocusLost
         // TODO add your handling code here:
         try{
-        String txt =fshoot.getText();
+        String txt =fshoot.getText().trim();
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
                 isCenter(tempnum,radiox2r1,radiox3r1);
                 totalscore+=tempnum;
+                
                 if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
-                                tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                                //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
                                 thegame.finish();
                             }
                     
-                tareaNotes.setText(curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                
                     if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
                         String finalcal = String.valueOf(totalscore);
                         scorebtn.setText(finalcal); 
@@ -632,7 +651,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 }
         }
         catch(NumberFormatException nfe){}
-        
+        helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
     }//GEN-LAST:event_fshootFocusLost
 
 /** 
@@ -653,7 +672,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void sshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sshootFocusLost
         // TODO add your handling code here:
 
-        String txt =sshoot.getText();
+        String txt =sshoot.getText().trim();
         
         int tempnum = Integer.parseInt(txt);
             try {
@@ -661,11 +680,10 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                     isCenter(tempnum,radiox2r2,radiox3r2);
                 totalscore+=tempnum;
                 if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
-                                tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                                //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
                                 thegame.finish();
                             }
-                    
-                tareaNotes.setText(curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                   
                     if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
                         String finalcal = String.valueOf(totalscore);
                         scorebtn.setText(finalcal);
@@ -693,7 +711,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 }
             }
             catch(NumberFormatException nfe){}
-        
+        helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
     }//GEN-LAST:event_sshootFocusLost
 
 /** 
@@ -714,17 +732,16 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private void tshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tshootFocusLost
          // TODO add your handling code here:
         try{
-        String txt =tshoot.getText();
+        String txt =tshoot.getText().trim();
         int tempnum = Integer.parseInt(txt);
             if(rules.isValid(tempnum)){
                 isCenter(tempnum,radiox2r3,radiox3r3);
                 totalscore+=tempnum;
-                
                 if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
-                                tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                                //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
                                 thegame.finish();
                             }
-                    tareaNotes.setText(curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                   
                     if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
                         String finalcal = String.valueOf(totalscore);
                         scorebtn.setText(finalcal);
@@ -741,6 +758,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                    //returnPlayer
                    //reset 
                     }
+                    
                     tshoot.setEnabled(false);
             }
               else{
@@ -751,6 +769,7 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
                 }
         }
         catch(NumberFormatException nfe){}
+        helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
     }//GEN-LAST:event_tshootFocusLost
 
     /**
@@ -881,13 +900,16 @@ public void endGame() {
         isTurn2.doClick();
         if(isTurn1.isSelected()){
         reversePlayer(thegame.returnFirstTeam());
-        this.helpbar.setText(thegame.checkout(curr_player.getScore()));
+        //helpbar.setText(thegame.checkout(curr_player.getScore()));
+        //tareaNotes.setText("Now play > "+curr_player.getPlayer()+" "+curr_player.getScore());
+        
         }
         else if(isTurn2.isSelected()){
             reversePlayer(thegame.returnSecondTeam());
-        this.helpbar.setText(thegame.checkout(curr_player.getScore()));
+            //tareaNotes.setText("Now play > "+curr_player.getPlayer()+" "+curr_player.getScore());
+        
         }
-        tareaNotes.setText("Now play > "+curr_player.getName()+" "+curr_player.getScore());
+        helpbar.setText(thegame.checkout(curr_player.getScore()));
     }
  
  /**
@@ -939,6 +961,22 @@ public void endGame() {
         return sc;
     }
     
+    public void setlblA(String text) {
+        teamlbl1.setText(text);
+    }
+    
+    public void setlblB(String text) {
+        teamlbl2.setText(text);
+    }
+    
+    void startgame(Game game) {
+        thegame=game;
+        this.curr_player=thegame.returnFirstTeam();
+        setVisible(true);
+    }
+
+
+    
     private int teamScore1=501;
     private int teamScore2=501;
     private static int totalscore=0;
@@ -983,5 +1021,4 @@ public void endGame() {
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
 
-    
 }

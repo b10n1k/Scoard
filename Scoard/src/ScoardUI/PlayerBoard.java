@@ -10,15 +10,29 @@
  */
 package ScoardUI;
 
+import ScoardGame.Game;
+import ScoardGame.ScoardTeam;
+
 /**
  *
  * @author j0ni
  */
 public class PlayerBoard extends javax.swing.JFrame {
-
+    private ScoardField dartsboard = null;
+    private Game game = null;
+    private ScoardTeam teamA;
+    private ScoardTeam teamB;
+    
     /** Creates new form PlayerBoard */
     public PlayerBoard() {
+        super("Who wants to play darts???");
         initComponents();
+        //setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setVisible(true);
+        //dartsboard = new ScoardField();
+        game=new Game();
+        teamA = null;
+        teamB = null;
     }
 
     /** This method is called from within the constructor to
@@ -32,46 +46,45 @@ public class PlayerBoard extends javax.swing.JFrame {
 
         jTextField5 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        teama = new javax.swing.JLabel();
+        teamb = new javax.swing.JLabel();
+        teamnameA = new javax.swing.JTextField();
+        teamnameB = new javax.swing.JTextField();
+        playername_1 = new javax.swing.JTextField();
+        playername_3 = new javax.swing.JTextField();
+        playername_2 = new javax.swing.JTextField();
+        playername_4 = new javax.swing.JTextField();
+        teamnamelbl = new javax.swing.JLabel();
+        playernameAlbl = new javax.swing.JLabel();
+        playernameBlbl = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
-        jLabel6 = new javax.swing.JLabel();
+        addPlayersbtn = new javax.swing.JButton();
+        scoardplayerlbl = new javax.swing.JLabel();
 
         jTextField5.setText("jTextField5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        teama.setText("Team A");
 
-        jLabel2.setText("jLabel2");
+        teamb.setText("Team B");
 
-        jTextField1.setText("jTextField1");
+        playername_1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playername_1ActionPerformed(evt);
+            }
+        });
+        playername_1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                playername_1PropertyChange(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        teamnamelbl.setText("Team Name :");
 
-        jTextField3.setText("jTextField3");
+        playernameAlbl.setText("Player A:");
 
-        jTextField4.setText("jTextField4");
-
-        jTextField6.setText("jTextField6");
-
-        jTextField7.setText("jTextField7");
-
-        jLabel3.setText("jLabel3");
-
-        jLabel4.setText("jLabel4");
-
-        jLabel5.setText("jLabel5");
+        playernameBlbl.setText("Player B:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -85,53 +98,64 @@ public class PlayerBoard extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5))
+                            .addComponent(teamnamelbl)
+                            .addComponent(playernameAlbl)
+                            .addComponent(playernameBlbl))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(teama)
+                            .addComponent(teamnameA)
+                            .addComponent(playername_1)
+                            .addComponent(playername_3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(47, 47, 47)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))))
+                            .addComponent(playername_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(playername_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(teamnameB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(teamb))))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {playername_1, playername_2, playername_3, playername_4, teamnameA, teamnameB});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(teamb)
+                    .addComponent(teama))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(teamnameB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(teamnameA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(teamnamelbl))
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(playername_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playername_2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playernameAlbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(playername_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playername_4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playernameBlbl))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
-        jButton1.setText("jButton1");
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {playername_1, playername_2, playername_3, playername_4, teamnameA, teamnameB});
 
-        jLabel6.setText("jLabel6");
+        addPlayersbtn.setText("OK");
+        addPlayersbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlayersbtnActionPerformed(evt);
+            }
+        });
+
+        scoardplayerlbl.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        scoardplayerlbl.setText("Scoard");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,79 +167,92 @@ public class PlayerBoard extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(178, 178, 178)
-                        .addComponent(jLabel6)))
-                .addContainerGap(38, Short.MAX_VALUE))
+                        .addComponent(scoardplayerlbl))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(150, 150, 150)
+                        .addComponent(addPlayersbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(11, 11, 11)
-                .addComponent(jLabel6)
+                .addComponent(scoardplayerlbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addComponent(jButton1)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addComponent(addPlayersbtn)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PlayerBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PlayerBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PlayerBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PlayerBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void addPlayersbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlayersbtnActionPerformed
+       
+        if(!"".equals(teamnameA.getText()) && !"".equals(teamnameB.getText())){ //check if team name are determined
+            dartsboard = new ScoardField();
+            teamA = new ScoardTeam(teamnameA.getText(),dartsboard);
+            dartsboard.setlblA(teamnameA.getText());
+            teamB = new ScoardTeam(teamnameB.getText(),dartsboard);
+            dartsboard.setlblB(teamnameB.getText());
+            
+            if(!playername_1.getText().equals("")) 
+                teamA.addPlayer(playername_1.getText());
+            System.out.println(teamA.displayStatus());
+            if(!playername_2.getText().equals("")) 
+                teamB.addPlayer(playername_2.getText());
+            System.out.println(teamB.displayStatus());
+            if(!playername_3.getText().equals("")) teamA.addPlayer(playername_3.getText());
+            if(!playername_4.getText().equals("")) teamB.addPlayer(playername_4.getText());
+            game.register(teamA, teamB);
+            game.setDartsboard(dartsboard);
+            dartsboard.startgame(game);
+            dartsboard.setVisible(true);
+            //setVisible(false);
         }
-        //</editor-fold>
+        else{}
+         
+    }//GEN-LAST:event_addPlayersbtnActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
 
-            public void run() {
-                new PlayerBoard().setVisible(true);
-            }
-        });
-    }
+
+    private void playername_1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_playername_1PropertyChange
+        
+        String property = evt.getPropertyName();
+        if ("text".equals(property)) {
+            System.out.println(evt.getNewValue());
+          //button2.setBackground((Color) propertyChangeEvent.getNewValue());
+        }
+    }//GEN-LAST:event_playername_1PropertyChange
+
+    private void playername_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playername_1ActionPerformed
+        //playername_1
+          System.out.println("oo");      
+
+    }//GEN-LAST:event_playername_1ActionPerformed
+
+
+   // public static void main(String[] args){
+     //   new PlayerBoard();
+    //}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JButton addPlayersbtn;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel playernameAlbl;
+    private javax.swing.JLabel playernameBlbl;
+    private javax.swing.JTextField playername_1;
+    private javax.swing.JTextField playername_2;
+    private javax.swing.JTextField playername_3;
+    private javax.swing.JTextField playername_4;
+    private javax.swing.JLabel scoardplayerlbl;
+    private javax.swing.JLabel teama;
+    private javax.swing.JLabel teamb;
+    private javax.swing.JTextField teamnameA;
+    private javax.swing.JTextField teamnameB;
+    private javax.swing.JLabel teamnamelbl;
     // End of variables declaration//GEN-END:variables
 }

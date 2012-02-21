@@ -33,6 +33,11 @@ public class Game {
         register(new ScoardTeam("player2",this.darts));
     }
     
+    public Game() {
+        teams=new Vector<ScoardTeam>();
+        this.turn=true;
+    }
+    
     private void register(ScoardTeam team){
         teams.add(team);
     }
@@ -40,6 +45,10 @@ public class Game {
     public void register(ScoardTeam teamA, ScoardTeam teamB){
         teams.add(teamA);
         teams.add(teamB);
+    }
+    
+    public void register(String name){
+        teams.add(new ScoardTeam(name,this.darts));
     }
     
     public void setStorePoint(int storePoint) {//private
@@ -452,18 +461,6 @@ public class Game {
         }
     }
     
-    protected synchronized void main_play_b(ScoardTeam team){
-        while(turn==true){
-            try{
-                wait();
-               
-            }catch(Exception ex){}
-            
-            turn=true;
-            notifyAll();
-        }
-    }
-    
     public ScoardTeam returnFirstTeam() {
         return teams.firstElement();
     }
@@ -481,5 +478,9 @@ public class Game {
     public void finish() {
         
         darts.endGame();
+    }
+
+    public void setDartsboard(ScoardField dartsboard) {
+        darts = dartsboard;
     }
 }

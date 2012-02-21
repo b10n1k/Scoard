@@ -5,6 +5,7 @@
 package ScoardGame;
 
 import ScoardGame.Game;
+import ScoardUI.PlayerBoard;
 import ScoardUI.ScoardField;
 
 /**
@@ -15,7 +16,7 @@ import ScoardUI.ScoardField;
 public class DartGame {
     
     public DartGame(){
-        new ScoardField();
+        new PlayerBoard();
     }
         /**
      * @param args the command line arguments
