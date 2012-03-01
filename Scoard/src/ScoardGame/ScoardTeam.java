@@ -50,9 +50,9 @@ public class ScoardTeam extends Player{
     
     public String getPlayer(){
         if((index%getNumOfPlayers())==0)
-            this.curr=players.get(index++);
-        else {
             this.curr=players.get(index);
+        else {
+            this.curr=players.get(++index);
             index=0;
         }
         return curr;

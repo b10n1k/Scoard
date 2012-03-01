@@ -41,6 +41,7 @@ public class ScoardField extends javax.swing.JFrame {
         fshoot.setText("");sshoot.setText("");tshoot.setText("");
         resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
         rules = new Rules01();
+        
         //thegame=new Game(this);
         
     }
@@ -56,6 +57,7 @@ public class ScoardField extends javax.swing.JFrame {
         rules = new Rules01();
         thegame=game;
         this.curr_player=thegame.returnFirstTeam();
+       // tareaNotes.setText(thegame.returnFirstTeam().getPlayer()+"\t\t"+thegame.returnSecondTeam().getPlayer());
     }
     /** This method is called from within the constructor to
      * initialize the form.
