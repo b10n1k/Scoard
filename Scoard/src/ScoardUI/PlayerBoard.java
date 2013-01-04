@@ -12,6 +12,7 @@ package ScoardUI;
 
 import ScoardGame.Game;
 import ScoardGame.ScoardTeam;
+import javax.swing.JFrame;
 
 /**
  *
@@ -23,11 +24,12 @@ public class PlayerBoard extends javax.swing.JFrame {
     private ScoardTeam teamA;
     private ScoardTeam teamB;
     
+    
     /** Creates new form PlayerBoard */
     public PlayerBoard() {
         super("Who wants to play darts???");
         initComponents();
-        //setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setVisible(true);
         //dartsboard = new ScoardField();
         game=new Game();
@@ -69,6 +71,11 @@ public class PlayerBoard extends javax.swing.JFrame {
 
         teamb.setText("Team B");
 
+        teamnameA.setText("team A");
+
+        teamnameB.setText("team B");
+
+        playername_1.setText("name_A1");
         playername_1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 playername_1ActionPerformed(evt);
@@ -79,6 +86,12 @@ public class PlayerBoard extends javax.swing.JFrame {
                 playername_1PropertyChange(evt);
             }
         });
+
+        playername_3.setText("name_A2");
+
+        playername_2.setText("name_B1");
+
+        playername_4.setText("name_B2");
 
         teamnamelbl.setText("Team Name :");
 
@@ -154,7 +167,7 @@ public class PlayerBoard extends javax.swing.JFrame {
             }
         });
 
-        scoardplayerlbl.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        scoardplayerlbl.setFont(new java.awt.Font("Dialog", 1, 18));
         scoardplayerlbl.setText("Scoard");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -210,7 +223,7 @@ public class PlayerBoard extends javax.swing.JFrame {
             game.setDartsboard(dartsboard);
             dartsboard.startgame(game);
             dartsboard.setVisible(true);
-            //setVisible(false);
+            setVisible(false);
         }
         else{}
          

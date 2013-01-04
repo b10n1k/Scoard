@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -109,7 +109,7 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="hitsPanel" max="32767" attributes="0"/>
-              <EmptySpace pref="30" max="-2" attributes="0"/>
+              <EmptySpace pref="28" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace pref="175" max="32767" attributes="0"/>
@@ -160,7 +160,6 @@
                       <Component id="hitsPanel" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="resetbtn" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -363,7 +362,10 @@
             <Component class="javax.swing.JTextArea" name="tareaNotes">
               <Properties>
                 <Property name="columns" type="int" value="20"/>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="tabSize" type="int" value="0"/>
+                <Property name="wrapStyleWord" type="boolean" value="true"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -371,6 +373,9 @@
         <Component class="javax.swing.JRadioButton" name="radiox2r2">
           <Properties>
             <Property name="text" type="java.lang.String" value="x2"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="tshoot"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radiox2r2ActionPerformed"/>
@@ -379,6 +384,9 @@
         <Component class="javax.swing.JRadioButton" name="radiox2r1">
           <Properties>
             <Property name="text" type="java.lang.String" value="x2"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="sshoot"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radiox2r1ActionPerformed"/>
@@ -387,6 +395,9 @@
         <Component class="javax.swing.JRadioButton" name="radiox2r3">
           <Properties>
             <Property name="text" type="java.lang.String" value="x2"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="scorebtn"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radiox2r3ActionPerformed"/>
@@ -395,6 +406,10 @@
         <Component class="javax.swing.JRadioButton" name="radiox3r1">
           <Properties>
             <Property name="text" type="java.lang.String" value="x3"/>
+            <Property name="borderPainted" type="boolean" value="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="sshoot"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radiox3r1ActionPerformed"/>
@@ -403,6 +418,9 @@
         <Component class="javax.swing.JRadioButton" name="radiox3r2">
           <Properties>
             <Property name="text" type="java.lang.String" value="x3"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="tshoot"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radiox3r2ActionPerformed"/>
@@ -411,6 +429,9 @@
         <Component class="javax.swing.JRadioButton" name="radiox3r3">
           <Properties>
             <Property name="text" type="java.lang.String" value="x3"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="scorebtn"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radiox3r3ActionPerformed"/>

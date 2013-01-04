@@ -146,20 +146,38 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="teamnameA">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="team A"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="teamnameB">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="team B"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="playername_1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="name_A1"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playername_1ActionPerformed"/>
             <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="playername_1PropertyChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="playername_3">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="name_A2"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="playername_2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="name_B1"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="playername_4">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="name_B2"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="teamnamelbl">
           <Properties>

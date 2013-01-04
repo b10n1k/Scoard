@@ -4,8 +4,13 @@
  */
 package ScoardGame;
 
+import ScoardLib.ExtendedIntegerClassFunction;
 import ScoardUI.ScoardField;
 import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 import java.util.Vector;
 import javax.swing.JOptionPane;
@@ -16,11 +21,15 @@ import javax.swing.JOptionPane;
  */
 public class Game {
     private boolean turn;
+    private ExtendedIntegerClassFunction tbl;
+    private HashMap<Integer,ExtendedIntegerClassFunction> tblindex=null;
     
     public Game(ScoardTeam t1, ScoardTeam t2, ScoardField darts) {
         teams=new Vector<ScoardTeam>();
         this.darts = darts;
         this.turn=true;
+       
+        create_tbls();
         register(t1); 
         register(t2);
     }
@@ -30,7 +39,7 @@ public class Game {
         this.turn=true;
         
         this.darts =darts;
-                
+                create_tbls();
         register(new ScoardTeam("player1",this.darts)); 
         register(new ScoardTeam("player2",this.darts));
     }
@@ -38,6 +47,7 @@ public class Game {
     public Game() {
         teams=new Vector<ScoardTeam>();
         this.turn=true;
+        create_tbls();
     }
     
     private void register(ScoardTeam team){
@@ -68,6 +78,58 @@ public class Game {
     return false;
     }
 
+    protected void create_tbls(){
+        //working with sets
+    //SetA array of multi by 2
+        ArrayList<Integer> setBy2=new ArrayList<Integer>();
+    
+        for(int i=1;i<21;i++){
+            setBy2.add(Integer.valueOf(i)*2);
+            //{2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40};
+        }
+
+    
+    //SetA array of multi by 3
+        ArrayList<Integer> setBy3=new ArrayList<Integer>();
+    
+        for(int i=1;i<21;i++){
+            setBy3.add(Integer.valueOf(i)*3);    
+        }
+    
+    //SetA array of common appearances
+        ArrayList<Integer> setAB=new ArrayList<Integer>();
+        
+        for(Integer x:setBy2){
+            for(Integer n:setBy3){
+                if(x.compareTo(n)==0){
+                    setAB.add(x);
+            }
+        }
+    }
+    
+    
+    //SetA array of common appearances
+    HashSet<Integer> noset=new HashSet<Integer>();
+    
+    for(int i=1;i<60;i++){
+            if(!setBy2.contains(Integer.valueOf(i)) && !setBy3.contains(i)){
+                noset.add(i);        
+        }
+    }
+    
+
+    //An array of setA+setB combo from 
+    tblindex=new HashMap<Integer,ExtendedIntegerClassFunction>();
+    
+        for(Integer b:setBy3){
+            for(Integer a:setBy2){
+                int key=a.intValue()+b.intValue();
+              //  new ArrayInteger().setValues(a, b);// a b
+                tblindex.put(new Integer(Integer.valueOf(key)),new ExtendedIntegerClassFunction(a,b)); //key(sum(a+b))-->values(a,b))
+                
+            }
+        }
+    }
     
     public String checkout(int value){
         if(value>170){
@@ -278,245 +340,245 @@ public class Game {
                 return "T19 + 10 + D16";
                 //break;
             case 98:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T20 + D19";
                 //break;
             case 97:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + D20";
                 //break;
             case 96:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T20 + D18";
                 //break;
             case 95:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + D19";
                 //break;
             case 94:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T18 + D20";
                 //break;
             case 93:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + D18";
                 //break;
             case 92:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T20 + D16";
                 //break;
             case 91:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T17 + D20";
                 //break;
             case 90:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T18 + D18";
                 //break;
                 
             case 89:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + D16";
                 //break;
             case 88:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T16 + D20";
                 //break;
             case 87:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T17 + D18";
                 //break;
             case 86:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T18 + D16";
                 //break;
             case 85:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T15 + D20";
                 //break;
             case 84:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T16 + D18";
                 //break;
             case 83:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T17 + D16";
                 //break;
             case 82:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T14 + D20";
                 //break;
             case 81:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T15 + D18";
                 //break;
             case 80:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T16 + D16";
                 //break;
                 
             case 79:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T13 + D20";
                 //break;
             case 78:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T18 + D12";
                 //break;
             case 77:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T15 + D16";
                 //break;
             case 76:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T20 + D8";
                 //break;
             case 75:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T13 + D18";
                 //break;
             case 74:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T14 + D16";
                 //break;
             case 73:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + D8";
                 //break;
             case 72:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T16 + D12";
                 //break;
             case 71:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T13 + D16";
                 //break;
             case 70:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T18 + D8";
                 //break;
                 
             case 69:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + BULL";
                 //break;
             case 68:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T20 + D4";
                 //break;
             case 67:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T17 + D8";
                 //break;
             case 66:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T10 + D18";
                 //break;
             case 65:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T19 + D4";
                 //break;
             case 64:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T16 + D8";
                 //break;
             case 63:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T13 + D12";
                 //break;
             case 62:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "T10 + D16";
                 //break;
             case 61:
-                return calculator(value,2);
-                //return "T15 + T20";
+                return calcParse(calculator(value));
+                //return "T15 + D20";
                 //break;
             case 60:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "20 + D20";
                 //break;
                 
             case 59:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "19 + D20";
                 //break;
             case 58:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "18 + D20";
                 //break;
             case 57:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "17 + D20";
                 //break;
             case 56:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "16 + D20";
                 //break;
             case 55:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "15 + D20";
                 //break;
             case 54:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "14 + D20";
                 //break;
             case 53:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "13 + D20";
                 //break;
             case 52:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "12 + D20";
                 //break;
             case 51:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "19 + D16";
                 //break;
             case 50:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "10 + D20";
                 //break;
                 
             case 49:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "17 + D16";
                 //break;
             case 48:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "16 + D16";
                 //break;
             case 47:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "15 + D16";
                 //break;
             case 46:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "6 + D20";
                 //break;
             case 45:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "13 + D16";
                 //break;
             case 44:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "12 + D16";
                 //break;
             case 43:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "3 + D20";
                 //break;
             case 42:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "10 + D16";
                 //break;
             case 41:
-                return calculator(value,2);
+                return calcParse(calculator(value));
                 //return "9 + D16";
                 //break;
                 
             default:
-                return calculator(value,1);
+                return "D"+(value/2);
                 //return " You need Just a Double score!!";
             }   
         }
@@ -528,208 +590,20 @@ public class Game {
      * @param index the remained shoots
      * @return the hits tip
      */
-    private String calculator2(int score,int index){
-        int sh1=0;
-        int sh2=0;
-        String tip="";
-        
-        
-        switch(index){
-            
-            case 2:
-       // if((((score%2)==0) && (score<=40) || (score>1))){ //return the double value in the case is possible to finish just with a shoot
-         //   String tmp=Integer.toString(score/2);
-           // tip="D"+tmp;
-        //} 
-        //else 
-            if(score==50) //consider a simple bull finishing
-                tip="BULL";
-        else { //if it needs 2 shoots to finish
-            sh2=score; 
-            while(sh2>40 && (sh2%2)!=0){
-                sh2--;   // venus 1
-                sh1=score-sh2; //and store to sh1 the remaining 
-            }
-                if(((sh1/2)+(sh2/2))==0){
-                // if sh2>40 && (sh2%2)==0
-                    //if((sh1%3)==0){
- //case 1
-                    String tmp="D";
-                        
-                        tmp+=Integer.toString(sh1);
-                        tmp+=" + D"+Integer.toString(sh2/2);
-                        tip=tmp;
-                }
-                else
-                if(((sh1/3)+(sh2/2))==0){
-                        
-                        String tmp="T";
-                        
-                        tmp+=Integer.toString(sh1);
-                        tmp+=" + D"+Integer.toString(sh2/2);
-                        tip=tmp;
-                    }
-                
-                    //else{
-                    //String tmp=Integer.toString(sh1);
-                    //tmp+=" + D"+Integer.toString(sh2/2);
-                  //  tip=tmp;
-                   // }
-        
-               // }
-                              
-              
-            }
-                break;
-            case 1:
-                String tmp="D";
-                tmp+=Integer.toString(score/2);
-                tip=tmp;
-                break;
-        }
-        return tip;
-    }
+      private ExtendedIntegerClassFunction calculator(int score){
+          //TODO Give the standard hit row for the current score (in a table), and check if it s changed.
+        //ArrayList<Integer> sa;
+        //ArrayList<Integer> sb;
+        Integer key=Integer.valueOf(score);
     
-    private String calculator(int score,int index){
-        int sh1=0;
-        int sh2=0;
-        String tip="";
-        
-        
-        switch(index){
-            
-            case 2:
-                sh2=40;
-                int remain=score-sh2;
-                
-                if(remain>60){
-                    sh1=60;
-                    int tmp=remain-sh1;
-                    tip="T20 + "+tmp+" + D20";
-                }
-                else if(remain>50){
-                    int tmp=remain-50;
-                    tip="bull + "+tmp+" + D20";
-                }
-                else if(remain==50){
-                    tip="BULL + D20";
-                }
-                else if(remain<50){
-                    Random rand=new Random();
-                    int ra=0;
-                    int tmp=0;
-                    do{
-                    ra=rand.nextInt()%10;
-                    tmp = remain-ra;
-                        
-                        sh1=tmp;
-                    }while(tmp<=40 && sh1<=40 && (tmp%2)==0 && (sh1%2)==0);
-                    ra/=2;
-                    sh1/=2;
-                    tip="D"+sh1+" + "+ra+" +D20";
-                        /*
-                        if(sh1<=20 && tmp<=20 || tmp!=25 && tmp!=0){
-                            tip="D"+sh1+" + "+tmp+" +D20";
-                        }
-                        else if(sh1<=20 && tmp<=20 || tmp!=25 && tmp==0){
-                            tip="D"+sh1+" + "+" + D20";
-                        }
-                        
-                    }
-                
-                    else{
-                        sh1=remain;
-                        
-                        int ra=rand.nextInt()*20;
-                        sh1=sh1-ra;
-                        
-                        if(sh1<=20 && ra!=0){
-                            tip="D"+sh1+" + "+ra+" +D20";
-                        }
-                        else if(sh1<=20 && ra==0){
-                            tip="D"+sh1+" + "+" + D20";
-                        }
-                        
-                    }
-                }
-                         * */
-                         
-                                 }
-        
-                else if(remain<20){
-                    String tmp="D";
-                    if((remain%2)==0){
-                        tmp+=Integer.toString(remain/2);
-                    }
-                    else{
-                        tmp=Integer.toString(remain);
-                    }
-                    tip=tmp+" + D20";
-                
-                }
-                break;
-            case 1:
-                String tmp="D";
-                tmp+=Integer.toString(score/2);
-                tip=tmp;
-                break;
+        //int[] points={90,89,87,86,85,84,83,50,49,48,47,46,45,44,43,42,41,40,39,38,37,36,35,34,33,32,31,30,25};
+    //score
+    
+        if(tblindex.containsKey(key)){
+            return tblindex.get(key);
         }
-        return tip;
-    }
         
-    private String calculator3(int score,int index){
-        int sh1=0;
-        int sh2=0;
-        String tip="";
-        
-        
-        switch(index){
-            
-            case 2:
-            if(score==50) //consider a simple bull finishing
-                tip="BULL";
-            else { //if it needs 2 shoots to finish
-                sh1=score;
-                if(sh1/2==score && (sh1%2)==0 && (sh1/2)<=20){
-                    tip="D";
-                    tip+=Integer.toString(sh1/2);
-                }
-                else if((sh1/2)<score && (sh1%2)==0 && (sh1/2)<20){
-                    sh2=score-sh1;
-                    if(sh2<=40){
-                        tip="D";
-                        tip+=Integer.toString(sh1/2)+" ";
-                        tip+="D";
-                        tip+=Integer.toString(sh2/2);
-                    }
-                    else{
-                        tip="You can't finish!!";
-                                
-                    }
-                }
-                else{
-                    if((sh1/3)<score && (sh1%3)==0 && (sh1/3)<20){
-                         sh2=score-(sh1/3);
-                    if(sh2<=40){
-                        tip="T";
-                        tip+=Integer.toString(sh1/2)+" ";
-                        tip+="D";
-                        tip+=Integer.toString(sh2/2);
-                    }
-                   
-                    }
-                }
-           
-              
-            }
-                break;
-            case 1:
-                String tmp="D";
-                tmp+=Integer.toString(score/2);
-                tip=tmp;
-                break;
-        }
-        return tip;
+        return null;
     }
     
     public ScoardTeam returnFirstTeam() {
@@ -754,4 +628,53 @@ public class Game {
     public void setDartsboard(ScoardField dartsboard) {
         darts = dartsboard;
     }
+
+    private String calcParse(ExtendedIntegerClassFunction hashvalues) {
+        String da="D";
+        String dd="D";
+        String tt="T";
+        String strvar1="";
+        String strvar2="";
+        String mes="";
+        //ExtendedIntegerClassFunction values = tblindex.get(hashvalues);
+        //System.out.println(">>>"+hashvalues.toString());
+        int[] arr=hashvalues.parseValues();
+        int var1=arr[1];
+        //parse var1
+        if(var1!=25 || var1!=50){
+            if(var1<=40)
+                strvar1="D"+Integer.toString(var1/2);
+            else if(var1>40)
+                strvar1="T"+Integer.toString(var1/3);
+            else 
+                strvar1=Integer.toString(var1);
+        }
+        else
+            strvar1.concat(" or "+var1);
+        int var2=arr[0];
+        //parse var2
+        
+        if(var2!=25 || var2!=50){
+            if(var2<=40)
+                strvar2="D"+Integer.toString(var2/2);
+            else if(var2>40)
+                strvar2="T"+Integer.toString(var2/3);
+            else 
+                strvar2=Integer.toString(var2);
+        }
+        else
+            strvar2.concat(" or "+var2);
+        
+        if(var1==0 )
+            mes=strvar2;
+        else
+            if(var2==0)
+                mes=strvar1;
+        else
+             if((var1+var2)<=40 && ((var1+var2)%2)==0)
+                 mes="D"+Integer.toString((var1+var2)/2);
+        else
+                mes=strvar1+" "+strvar2;
+        return mes;
+    }   
 }

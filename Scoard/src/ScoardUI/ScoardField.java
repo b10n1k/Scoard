@@ -15,13 +15,19 @@
 package ScoardUI;
 
 import ScoardException.InvalidHit;
+import ScoardException.*;
 import ScoardGame.DartGame;
 import ScoardGame.Game;
 import ScoardGame.Rules01;
 import ScoardGame.ScoardTeam;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  *
@@ -31,19 +37,20 @@ import javax.swing.JOptionPane;
  */
 public class ScoardField extends javax.swing.JFrame {
 
-    
     /** Creates new form ScoardField */
     public ScoardField() {
         super("DartsBoard");
         initComponents();
         //setVisible(true);
         isTurn1.doClick();
-        fshoot.setText("");sshoot.setText("");tshoot.setText("");
-        resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
+        fshoot.setText("");
+        sshoot.setText("");
+        tshoot.setText("");
+        resetradiobutton = new ArrayList<javax.swing.JRadioButton>();
         rules = new Rules01();
-        
+        tareaNotes.append(teamlbl1.getText() + "\t " + teamlbl2.getText() + "\n");
         //thegame=new Game(this);
-        
+
     }
 
     /** Creates new form ScoardField */
@@ -52,13 +59,18 @@ public class ScoardField extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         isTurn1.doClick();
-        fshoot.setText("");sshoot.setText("");tshoot.setText("");
-        resetradiobutton=new ArrayList<javax.swing.JRadioButton>();
+        fshoot.setText("");
+        sshoot.setText("");
+        tshoot.setText("");
+        resetradiobutton = new ArrayList<javax.swing.JRadioButton>();
         rules = new Rules01();
-        thegame=game;
-        this.curr_player=thegame.returnFirstTeam();
-       // tareaNotes.setText(thegame.returnFirstTeam().getPlayer()+"\t\t"+thegame.returnSecondTeam().getPlayer());
+        thegame = game;
+
+        tareaNotes.append(teamlbl1.getText() + "\t " + teamlbl2.getText() + "\n");
+        this.curr_player = thegame.returnFirstTeam();
+        // tareaNotes.setText(thegame.returnFirstTeam().getPlayer()+"\t\t"+thegame.returnSecondTeam().getPlayer());
     }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -158,10 +170,14 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         tareaNotes.setColumns(20);
+        tareaNotes.setEditable(false);
         tareaNotes.setRows(5);
+        tareaNotes.setTabSize(0);
+        tareaNotes.setWrapStyleWord(true);
         jScrollPane1.setViewportView(tareaNotes);
 
         radiox2r2.setText("x2");
+        radiox2r2.setNextFocusableComponent(tshoot);
         radiox2r2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radiox2r2ActionPerformed(evt);
@@ -169,6 +185,7 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         radiox2r1.setText("x2");
+        radiox2r1.setNextFocusableComponent(sshoot);
         radiox2r1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radiox2r1ActionPerformed(evt);
@@ -176,6 +193,7 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         radiox2r3.setText("x2");
+        radiox2r3.setNextFocusableComponent(scorebtn);
         radiox2r3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radiox2r3ActionPerformed(evt);
@@ -183,6 +201,8 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         radiox3r1.setText("x3");
+        radiox3r1.setBorderPainted(true);
+        radiox3r1.setNextFocusableComponent(sshoot);
         radiox3r1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radiox3r1ActionPerformed(evt);
@@ -190,6 +210,7 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         radiox3r2.setText("x3");
+        radiox3r2.setNextFocusableComponent(tshoot);
         radiox3r2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radiox3r2ActionPerformed(evt);
@@ -197,6 +218,7 @@ public class ScoardField extends javax.swing.JFrame {
         });
 
         radiox3r3.setText("x3");
+        radiox3r3.setNextFocusableComponent(scorebtn);
         radiox3r3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radiox3r3ActionPerformed(evt);
@@ -352,7 +374,7 @@ public class ScoardField extends javax.swing.JFrame {
                     .addComponent(isTurn2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hitsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(175, Short.MAX_VALUE)
                 .addComponent(helpbar, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -408,370 +430,353 @@ public class ScoardField extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-/**
+    /**
      * This button component multiply the value of the first shoot by 2.
      * You must not push it before entering the score in the field.
      * 
      * @param evt 
      */
 private void radiox2r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r1ActionPerformed
-    
-        if(radiox2r1.isSelected()){
-            //TODO check input
-            int getvalue=Integer.parseInt(fshoot.getText());
-            int value=getvalue*2;
-            totalscore=value; 
-            String str=String.valueOf(value);
-            String score=String.valueOf(totalscore);
-            fshoot.setText(str);
-            scorebtn.setText(score);
-            radiox3r1.setEnabled(false);
-            fshoot.setEditable(false);
-            resetradiobutton.add(radiox2r1);
-        }
-        else{
-            radiox2r1.setEnabled(false);
-            //TODO prompt to change the state
-        }
-    
+
+    if (radiox2r1.isSelected()) {
+        //TODO check input
+        int getvalue = Integer.parseInt(fshoot.getText());
+        int value = getvalue * 2;
+        totalscore = value;
+        helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        String str = String.valueOf(value);
+        String score = String.valueOf(totalscore);
+        fshoot.setText(str);
+        scorebtn.setText(score);
+        radiox3r1.setEnabled(false);
+        fshoot.setEditable(false);
+        resetradiobutton.add(radiox2r1);
+    } else {
+        radiox2r1.setEnabled(false);
+        //TODO prompt to change the state
+    }
+    sshoot.requestFocus(true);
 }//GEN-LAST:event_radiox2r1ActionPerformed
 
-/**
+    /**
      * This button component multiply the value of the first shoot by 3.
- * You must not push it before entering the score in the field.
+     * You must not push it before entering the score in the field.
      * 
      * @param evt 
      */
 private void radiox3r1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r1ActionPerformed
-    if(radiox3r1.isSelected()){
-            //TODO check input
-            int getvalue=Integer.parseInt(fshoot.getText());
-            int value=getvalue*3;
-            totalscore=value;
-            String str=String.valueOf(value);
-            String score=String.valueOf(totalscore);
-            fshoot.setText(str);
-            scorebtn.setText(score);
-            radiox2r1.setEnabled(false);
-            fshoot.setEditable(false);
-            resetradiobutton.add(radiox3r1);
-        }
-        else{
-            radiox3r1.setEnabled(false);
-            //TODO prompt to change the state
-        }
+    if (radiox3r1.isSelected()) {
+        //TODO check input
+        int getvalue = Integer.parseInt(fshoot.getText());
+        int value = getvalue * 3;
+        totalscore = value;
+        helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        String str = String.valueOf(value);
+        String score = String.valueOf(totalscore);
+        fshoot.setText(str);
+        scorebtn.setText(score);
+        radiox2r1.setEnabled(false);
+        fshoot.setEditable(false);
+        resetradiobutton.add(radiox3r1);
+    } else {
+        radiox3r1.setEnabled(false);
+        //TODO prompt to change the state
+    }
+    sshoot.requestFocus(true);
 }//GEN-LAST:event_radiox3r1ActionPerformed
 
-/**
+    /**
      * This button component multiply the value of the second shoot by 2.
      * You must not push it before entering the score in the field.
      * @param evt 
      */
 private void radiox2r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r2ActionPerformed
-    if(radiox2r2.isSelected()){
+    if (radiox2r2.isSelected()) {
         //TODO check input
-            int getvalue=Integer.parseInt(sshoot.getText());
-            int value=getvalue*2;
-            totalscore+=(value-getvalue);
-            String str=String.valueOf(value);
-            String score=String.valueOf(totalscore);
-            sshoot.setText(str);
-            scorebtn.setText(score);
-            radiox3r2.setEnabled(false);
-            sshoot.setEditable(false);
-            resetradiobutton.add(radiox2r2);
-        }
-        else{
-            radiox2r2.setEnabled(false);
-            //TODO prompt to change the state
-        }
+        int getvalue = Integer.parseInt(sshoot.getText());
+        int value = getvalue * 2;
+        totalscore += (value - getvalue);
+        helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        String str = String.valueOf(value);
+        String score = String.valueOf(totalscore);
+        sshoot.setText(str);
+        scorebtn.setText(score);
+        radiox3r2.setEnabled(false);
+        sshoot.setEditable(false);
+        resetradiobutton.add(radiox2r2);
+    } else {
+        radiox2r2.setEnabled(false);
+        //TODO prompt to change the state
+    }
+    tshoot.requestFocus(true);
 }//GEN-LAST:event_radiox2r2ActionPerformed
 
-/**
+    /**
      * This button component multiply the value of the second shoot by 3.
      * You must not push it before entering the score in the field.
- * 
+     * 
      * @param evt 
      */
 private void radiox3r2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r2ActionPerformed
-    if(radiox3r2.isSelected()){
-            //TODO check input
-            int getvalue=Integer.parseInt(sshoot.getText());
-            int value=getvalue*3;
-            totalscore+=(value-getvalue);
-            String str=String.valueOf(value);
-            String score=String.valueOf(totalscore);
-            sshoot.setText(str);
-            scorebtn.setText(score);
-            radiox2r2.setEnabled(false);
-            sshoot.setEditable(false);
-            resetradiobutton.add(radiox3r2);
-        }
-        else{
-            radiox3r2.setEnabled(false);
-            //TODO prompt to change the state
-        }
+    if (radiox3r2.isSelected()) {
+        //TODO check input
+        int getvalue = Integer.parseInt(sshoot.getText());
+        int value = getvalue * 3;
+        totalscore += (value - getvalue);
+        helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        String str = String.valueOf(value);
+        String score = String.valueOf(totalscore);
+        sshoot.setText(str);
+        scorebtn.setText(score);
+        radiox2r2.setEnabled(false);
+        sshoot.setEditable(false);
+        resetradiobutton.add(radiox3r2);
+    } else {
+        radiox3r2.setEnabled(false);
+        //TODO prompt to change the state
+    }
+    tshoot.requestFocus(true);
 }//GEN-LAST:event_radiox3r2ActionPerformed
 
-/**
+    /**
      * This button component multiply the value of the third shoot by 2.
      * You must not push it before entering the score in the field.
- * 
+     * 
      * @param evt 
      */
 private void radiox2r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox2r3ActionPerformed
-    if(radiox2r3.isSelected()){
-            int getvalue=Integer.parseInt(tshoot.getText());
-            int value=getvalue*2;
-            totalscore+=(value-getvalue);
-            String str=String.valueOf(value);
-            String score=String.valueOf(totalscore);
-            tshoot.setText(str);
-            scorebtn.setText(score);
-            radiox3r3.setEnabled(false);
-            tshoot.setEditable(false);
-            resetradiobutton.add(radiox2r3);
-        }
-        else{
-            radiox2r3.setEnabled(false);
-            //TODO prompt to change the state
-        }
+    if (radiox2r3.isSelected()) {
+        int getvalue = Integer.parseInt(tshoot.getText());
+        int value = getvalue * 2;
+        totalscore += (value - getvalue);
+        helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        String str = String.valueOf(value);
+        String score = String.valueOf(totalscore);
+        tshoot.setText(str);
+        scorebtn.setText(score);
+        radiox3r3.setEnabled(false);
+        tshoot.setEditable(false);
+        resetradiobutton.add(radiox2r3);
+    } else {
+        radiox2r3.setEnabled(false);
+        //TODO prompt to change the state
+    }
+    scorebtn.requestFocus(true);
 }//GEN-LAST:event_radiox2r3ActionPerformed
 
-/**
+    /**
      * This button component multiply the value of the third shoot by 3.
      *You must not push it before entering the score in the field.
- * 
+     * 
      * @param evt 
      */
 private void radiox3r3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radiox3r3ActionPerformed
-    if(radiox3r3.isSelected()){
-            //TODO check input
-            int getvalue=Integer.parseInt(tshoot.getText());
-            int value=getvalue*3;
-            totalscore+=(value-getvalue);
-            String str=String.valueOf(value);
-            String score=String.valueOf(totalscore);
-            tshoot.setText(str);
-            scorebtn.setText(score);
-            radiox2r3.setEnabled(false);
-            tshoot.setEditable(false);
-            resetradiobutton.add(radiox3r3);
-        }
-        else{
-            radiox3r3.setEnabled(false);
-            //TODO prompt to change the state
-        }
+    if (radiox3r3.isSelected()) {
+        //TODO check input
+        int getvalue = Integer.parseInt(tshoot.getText());
+        int value = getvalue * 3;
+        totalscore += (value - getvalue);
+        helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        String str = String.valueOf(value);
+        String score = String.valueOf(totalscore);
+        tshoot.setText(str);
+        scorebtn.setText(score);
+        radiox2r3.setEnabled(false);
+        tshoot.setEditable(false);
+        resetradiobutton.add(radiox3r3);
+
+    } else {
+        radiox3r3.setEnabled(false);
+        //TODO prompt to change the state
+    }
+    scorebtn.requestFocus(true);
 }//GEN-LAST:event_radiox3r3ActionPerformed
 
-/**
- * The button performs an calculation of the score of the 
- * current player and stores it into his score label and into its player. It is 
- * responsible to handle the player's rounds. This means that 
- * after every action prepares the panel for the next player.
- * 
- * @param evt 
- */
-private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scorebtnActionPerformed
-// TODO add your handling code here:
-    
-    if (isTurn1.isSelected()){
-        reduceTeamScore1();
-        this.curr_player.updateScore(this.returnLbl1());
-        tareaNotes.append(curr_player.getPlayer()+" scores \t"+totalscore+"\n");
-        if(curr_player.isWinner(this.curr_player.getScore())){
-            thegame.finish();
-        }
-        //this.helpbar.setText(curr_player.displayStatus());
-    }
-    else 
-        if(isTurn2.isSelected()){
-        reduceTeamScore2();
-        this.curr_player.updateScore(this.returnLbl2());
-        tareaNotes.append(curr_player.getPlayer()+" scores \t"+totalscore+"\n");
-        if(curr_player.isWinner(this.curr_player.getScore())){
-            thegame.finish();
-        }
-        //TODO helpbar setText()
-    }
-    reset();
-    reverseTurn(); 
-}//GEN-LAST:event_scorebtnActionPerformed
-
-/**
- * fshootFocusLostis a Listener for Textfield which is assigned to
- * the first shoot of the three ones. When you entered the score and pressed 
- * the tab button or move the mouse somewhere else it adds the the current value 
- * in the sum of the round. It accepts only numbers of the dartboard. 
- * 
- * Whenever there is a winner after the current shoot the game is finished.
- * 
- * Also it sets messages in the labels and changes appropriately the button value which 
- * it is going to store in the player. This value is changed in the case that 2x radio or 
- * 3x radio is selected. 
- * 
- * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
- * message. In this senario the player losts his turn.
- * 
- * @param evt 
- */
+    /**
+     * The button performs an calculation of the score of the 
+     * current player and stores it into his score label and into its player. It is 
+     * responsible to handle the player's rounds. This means that 
+     * after every action prepares the panel for the next player.
+     * 
+     * @param evt 
+     */
+    /**
+     * fshootFocusLostis a Listener for Textfield which is assigned to
+     * the first shoot of the three ones. When you entered the score and pressed 
+     * the tab button or move the mouse somewhere else it adds the the current value 
+     * in the sum of the round. It accepts only numbers of the dartboard. 
+     * 
+     * Whenever there is a winner after the current shoot the game is finished.
+     * 
+     * Also it sets messages in the labels and changes appropriately the button value which 
+     * it is going to store in the player. This value is changed in the case that 2x radio or 
+     * 3x radio is selected. 
+     * 
+     * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
+     * message. In this senario the player losts his turn.
+     * 
+     * @param evt 
+     */
     private void fshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fshootFocusLost
         // TODO add your handling code here:
-        try{
-        String txt =fshoot.getText().trim();
-        int tempnum = Integer.parseInt(txt);
-            if(rules.isValid(tempnum)){
-                isCenter(tempnum,radiox2r1,radiox3r1);
-                totalscore+=tempnum;
-                
-                if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
-                                //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
-                                thegame.finish();
-                            }
-                    
-                
-                    if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
-                        String finalcal = String.valueOf(totalscore);
-                        scorebtn.setText(finalcal); 
-                    }
-                    else{
-                        JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
-                        + " You gonna lose your turn.\n"
-                        + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
-                        totalscore=0;
-                        reset();
-                        reverseTurn(); 
-                    }
-                    fshoot.setEnabled(false);
+        try {
+            String txt = fshoot.getText().trim();
+            int tempnum = Integer.parseInt(txt);
+            if (rules.isValid(tempnum)) {
+                isCenter(tempnum, radiox2r1, radiox3r1);
+                totalscore += tempnum;
+
+                if (curr_player.isWinner(this.curr_player.getScore() - totalscore)) {
+                    //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                    thegame.finish();
                 }
-             else{
-                JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
+
+
+                if (!rules.isBurnedHit(this.curr_player.getScore() - totalscore)) {
+                    String finalcal = String.valueOf(totalscore);
+                    scorebtn.setText(finalcal);
+                } else {
+                    JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
+                            + " You gonna lose your turn.\n"
+                            + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
+                    totalscore = 0;
+                    reset();
+                    reverseTurn();
+                }
+                //fshoot.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(this, txt + " is out of legal range.\n"
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
                 fshoot.setText("");
-                }
+                fshoot.enableInputMethods(true);
+            }
+            helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        } catch (NumberFormatException nfe) {
+            fshoot.setText("");
         }
-        catch(NumberFormatException nfe){}
-        helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
+
     }//GEN-LAST:event_fshootFocusLost
 
-/** 
- *fshootFocusLostis a Listener for Textfield which is assigned to
- * the second shoot of the three ones. When you entered the score and pressed 
- * the tab button or move the mouse somewhere else it adds the the current value 
- * in the sum of the round. It accepts only numbers of the dartboard. 
- * 
- * Whenever there is a winner after the current shoot the game is finished.
- * 
- * Also it sets messages in the labels and changes appropriately the button value which 
- * it is going to store in the player. This value is changed in the case that 2x radio or 
- * 3x radio is selected. 
- * 
- * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
- * message. In this senario the player losts his turn.
- */
+    /** 
+     *fshootFocusLostis a Listener for Textfield which is assigned to
+     * the second shoot of the three ones. When you entered the score and pressed 
+     * the tab button or move the mouse somewhere else it adds the the current value 
+     * in the sum of the round. It accepts only numbers of the dartboard. 
+     * 
+     * Whenever there is a winner after the current shoot the game is finished.
+     * 
+     * Also it sets messages in the labels and changes appropriately the button value which 
+     * it is going to store in the player. This value is changed in the case that 2x radio or 
+     * 3x radio is selected. 
+     * 
+     * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
+     * message. In this senario the player losts his turn.
+     */
     private void sshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_sshootFocusLost
         // TODO add your handling code here:
+        try {
+            String txt = sshoot.getText().trim();
 
-        String txt =sshoot.getText().trim();
-        
-        int tempnum = Integer.parseInt(txt);
-            try {
-                if(rules.isValid(tempnum)){
-                    isCenter(tempnum,radiox2r2,radiox3r2);
-                totalscore+=tempnum;
-                if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
-                                //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
-                                thegame.finish();
-                            }
-                   
-                    if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
-                        String finalcal = String.valueOf(totalscore);
-                        scorebtn.setText(finalcal);
-                            }
-                    else{
-                        JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
+            int tempnum = Integer.parseInt(txt);
+
+            if (rules.isValid(tempnum)) {
+                isCenter(tempnum, radiox2r2, radiox3r2);
+                totalscore += tempnum;
+                if (curr_player.isWinner(this.curr_player.getScore() - totalscore)) {
+                    //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                    thegame.finish();
+                }
+
+                if (!rules.isBurnedHit(this.curr_player.getScore() - totalscore)) {
+                    String finalcal = String.valueOf(totalscore);
+                    scorebtn.setText(finalcal);
+                } else {
+                    JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
                             + " You gonna lose your turn.\n"
                             + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
-                        totalscore=0;
-                        reset();
-                        reverseTurn(); 
-                   //??skip scorebtn function
-                  //do not store any score
-                   //returnPlayer
-                   //reset 
-                    }
-                    sshoot.setEnabled(false);
-                }     
-                else{
-                JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
+                    totalscore = 0;
+                    reset();
+                    reverseTurn();
+                    //??skip scorebtn function
+                    //do not store any score
+                    //returnPlayer
+                    //reset 
+                }
+                //sshoot.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(this, txt + " is out of legal range.\n"
                         + " Retype the correct.\n"
-                        + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION );
+                        + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
                 //
                 sshoot.setText("");
-                }
             }
-            catch(NumberFormatException nfe){}
-        helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
+            helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        } catch (NumberFormatException nfe) {
+            sshoot.setText("");
+        }
+        // helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
     }//GEN-LAST:event_sshootFocusLost
 
-/** 
- *tshootFocusLostis a Listener for Textfield which is assigned to
- * the third and last shoot of the three ones. When you entered the score and pressed 
- * the tab button or move the mouse somewhere else it adds the the current value 
- * in the sum of the round. It accepts only numbers of the dartboard. 
- * 
- * Whenever there is a winner after the current shoot the game is finished.
- * 
- * Also it sets messages in the labels and changes appropriately the button value which 
- * it is going to store in the player. This value is changed in the case that 2x radio or 
- * 3x radio is selected. 
- * 
- * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
- * message. In this senario the player losts his turn.
- */
+    /** 
+     *tshootFocusLostis a Listener for Textfield which is assigned to
+     * the third and last shoot of the three ones. When you entered the score and pressed 
+     * the tab button or move the mouse somewhere else it adds the the current value 
+     * in the sum of the round. It accepts only numbers of the dartboard. 
+     * 
+     * Whenever there is a winner after the current shoot the game is finished.
+     * 
+     * Also it sets messages in the labels and changes appropriately the button value which 
+     * it is going to store in the player. This value is changed in the case that 2x radio or 
+     * 3x radio is selected. 
+     * 
+     * Also it checks if the shoot is busted when it is one or less than zero and provides the proper 
+     * message. In this senario the player losts his turn.
+     */
     private void tshootFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tshootFocusLost
-         // TODO add your handling code here:
-        try{
-        String txt =tshoot.getText().trim();
-        int tempnum = Integer.parseInt(txt);
-            if(rules.isValid(tempnum)){
-                isCenter(tempnum,radiox2r3,radiox3r3);
-                totalscore+=tempnum;
-                if(curr_player.isWinner(this.curr_player.getScore()-totalscore)){
-                                //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
-                                thegame.finish();
-                            }
-                   
-                    if(!rules.isBurnedHit(this.curr_player.getScore()-totalscore)){
-                        String finalcal = String.valueOf(totalscore);
-                        scorebtn.setText(finalcal);
-                            }
-                    else{
-                        JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
+        // TODO add your handling code here:
+        try {
+            String txt = tshoot.getText().trim();
+            int tempnum = Integer.parseInt(txt);
+            if (rules.isValid(tempnum)) {
+                isCenter(tempnum, radiox2r3, radiox3r3);
+                totalscore += tempnum;
+                if (curr_player.isWinner(this.curr_player.getScore() - totalscore)) {
+                    //tareaNotes.setText("CHECK DONE:: "+curr_player.getName()+ " score : "+totalscore+" needs "+(this.curr_player.getScore()-totalscore));
+                    thegame.finish();
+                }
+
+                if (!rules.isBurnedHit(this.curr_player.getScore() - totalscore)) {
+                    String finalcal = String.valueOf(totalscore);
+                    scorebtn.setText(finalcal);
+                } else {
+                    JOptionPane.showMessageDialog(this, " This shoot is busted.\n"
                             + " You gonna lose your turn.\n"
                             + "Next time scar better!!!", "Busted Round", JOptionPane.OK_OPTION);
-                        totalscore=0;
-                        reset();
-                        reverseTurn(); 
-                   //??skip scorebtn function
-                   //do not store any score
-                   //returnPlayer
-                   //reset 
-                    }
-                    
-                    tshoot.setEnabled(false);
-            }
-              else{
-                JOptionPane.showMessageDialog(this, txt+" is out of legal range.\n"
+                    totalscore = 0;
+                    reset();
+                    reverseTurn();
+                    //??skip scorebtn function
+                    //do not store any score
+                    //returnPlayer
+                    //reset 
+                }
+
+                //tshoot.setEnabled(false);
+            } else {
+                JOptionPane.showMessageDialog(this, txt + " is out of legal range.\n"
                         + " Retype the correct.\n"
                         + "Wish a better luck now!!!", "Wrong Input", JOptionPane.OK_OPTION);
                 tshoot.setText("");
-                }
+            }
+            helpbar.setText(thegame.checkout(curr_player.getScore() - totalscore));
+        } catch (NumberFormatException nfe) {
+
+            //JOptionPane.showMessageDialog(this, " Only NUMBER are allowed.\n", " Number Error", JOptionPane.ERROR_MESSAGE);
+            tshoot.setText("");
+        } catch (TextFormatException sfe) {
         }
-        catch(NumberFormatException nfe){}
-        helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
+        //helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore));
     }//GEN-LAST:event_tshootFocusLost
 
     /**
@@ -804,11 +809,12 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
      * @param evt 
      */
     private void menu_newgameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_newgameActionPerformed
-  
+
         try {
             Runtime.getRuntime().exec("java -jar dist/Scoard.jar");
-        } catch (IOException ex) {}
-        System.exit(0); 
+        } catch (IOException ex) {
+        }
+        System.exit(0);
     }//GEN-LAST:event_menu_newgameActionPerformed
 
     /**
@@ -821,115 +827,185 @@ private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    /**
-     * It uses to reduce the score in textfield of the first team.
-     * 
-     */
-public void reduceTeamScore1(){
-    System.out.println("in reduceTeamScore1");
-       teamScore1-=Integer.parseInt(scorebtn.getText());
-       String parseVal = Integer.toString(teamScore1);
-        teamscore1.setText(parseVal);
-}
+    private void scorebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_scorebtnActionPerformed
 
-/**
+// TODO add your handling code here:          if (isTurn1.isSelected()) {             reduceTeamScore1();             this.curr_player.updateScore(this.returnLbl1());             tareaNotes.append(totalscore + "\t ");             if (curr_player.isWinner(this.curr_player.getScore())) {                 thegame.finish();             }             //this.helpbar.setText(curr_player.displayStatus());         } else if (isTurn2.isSelected()) {             reduceTeamScore2();             this.curr_player.updateScore(this.returnLbl2());             tareaNotes.append(totalscore + "\n");             if (curr_player.isWinner(this.curr_player.getScore())) {                 thegame.finish();             }             //TODO helpbar setText()         }         reset();         reverseTurn();         fshoot.setFocusable(true);     }//GEN-LAST:event_scorebtnActionPerformed
+
+        /**
+         * It uses to reduce the score in textfield of the first team.
+         * 
+         */
+        if (isTurn1.isSelected()) {
+            reduceTeamScore1();
+
+
+            this.curr_player.updateScore(this.returnLbl1());
+            tareaNotes.append(totalscore + "\t ");
+            if (curr_player.isWinner(this.curr_player.getScore())) {
+                thegame.finish();
+            }
+            //this.helpbar.setText(curr_player.displayStatus()); 
+        } else if (isTurn2.isSelected()) {
+            reduceTeamScore2();
+            this.curr_player.updateScore(this.returnLbl2());
+            tareaNotes.append(totalscore + "\n");
+            if (curr_player.isWinner(this.curr_player.getScore())) {
+                thegame.finish();
+            }
+            //TODO helpbar setText()        
+        }
+        reset();
+        reverseTurn();
+    }
+
+    public void reduceTeamScore1() {
+        teamScore1 -= Integer.parseInt(scorebtn.getText());
+        String parseVal = Integer.toString(teamScore1);
+        teamscore1.setText(parseVal);
+    }
+
+    /**
      * It uses to reduce the score in textfield of the second team.
      * 
      */
-public void reduceTeamScore2(){
-  
-    System.out.println("in reduceTeamScore2");// delete line
-       teamScore2-=totalscore;
-       String parseVal = Integer.toString(teamScore2);
+    public void reduceTeamScore2() {
+        teamScore2 -= totalscore;
+        String parseVal = Integer.toString(teamScore2);
         teamscore2.setText(parseVal);
-}
+    }
 
-/**
- * Performs the reset action of a previous action.
- * TODO the code need to be improved 
- */
-private void reset() {
-        totalscore=0;
-        fshoot.setText("");sshoot.setText("");tshoot.setText("");
-        
-        for(javax.swing.JRadioButton bt:resetradiobutton){
-              bt.doClick();
+    /**
+     * Performs the reset action of a previous action.
+     * TODO the code need to be improved 
+     */
+    private void reset() {
+        totalscore = 0;
+        fshoot.setText("");
+        sshoot.setText("");
+        tshoot.setText("");
+
+        for (javax.swing.JRadioButton bt : resetradiobutton) {
+            bt.doClick();
         }
-        
+
         resetradiobutton.clear();
-        fshoot.setEditable(true);sshoot.setEditable(true);tshoot.setEditable(true);
-        fshoot.setEnabled(true);sshoot.setEnabled(true);tshoot.setEnabled(true);
-        radiox2r1.setEnabled(true); radiox2r2.setEnabled(true); radiox2r3.setEnabled(true);
-        radiox3r1.setEnabled(true);radiox3r2.setEnabled(true);radiox3r3.setEnabled(true);
+        fshoot.setEditable(true);
+        sshoot.setEditable(true);
+        tshoot.setEditable(true);
+        fshoot.setEnabled(true);
+        sshoot.setEnabled(true);
+        tshoot.setEnabled(true);
+        radiox2r1.setEnabled(true);
+        radiox2r2.setEnabled(true);
+        radiox2r3.setEnabled(true);
+        radiox3r1.setEnabled(true);
+        radiox3r2.setEnabled(true);
+        radiox3r3.setEnabled(true);
+        //scorebtn.setText("0");
+    }
+
+    /**
+     * Performs the reset action of a previous action selecting 
+     * the condition.
+     * TODO the code need to be improved 
+     */
+    private void reset(boolean bool) {
+        totalscore = 0;
+        fshoot.setText("");
+        sshoot.setText("");
+        tshoot.setText("");
+
+        for (javax.swing.JRadioButton bt : resetradiobutton) {
+            bt.doClick();
+        }
+
+        resetradiobutton.clear();
+        fshoot.setEditable(bool);
+        sshoot.setEditable(bool);
+        tshoot.setEditable(bool);
+        fshoot.setEnabled(bool);
+        sshoot.setEnabled(bool);
+        tshoot.setEnabled(bool);
+        radiox2r1.setEnabled(bool);
+        radiox2r2.setEnabled(bool);
+        radiox2r3.setEnabled(bool);
+        radiox3r1.setEnabled(bool);
+        radiox3r2.setEnabled(bool);
+        radiox3r3.setEnabled(bool);
         scorebtn.setText("0");
     }
 
-/**
- * Performs the reset action of a previous action selecting 
- * the condition.
- * TODO the code need to be improved 
- */
-private void reset(boolean bool) {
-        totalscore=0;
-        fshoot.setText("");sshoot.setText("");tshoot.setText("");
-        
-        for(javax.swing.JRadioButton bt:resetradiobutton){
-              bt.doClick();
-        }
-        
-        resetradiobutton.clear();
-        fshoot.setEditable(bool);sshoot.setEditable(bool);tshoot.setEditable(bool);
-        fshoot.setEnabled(bool);sshoot.setEnabled(bool);tshoot.setEnabled(bool);
-        radiox2r1.setEnabled(bool); radiox2r2.setEnabled(bool); radiox2r3.setEnabled(bool);
-        radiox3r1.setEnabled(bool);radiox3r2.setEnabled(bool);radiox3r3.setEnabled(bool);
-        scorebtn.setText("0");
-    }
-
-/**
- * Display the winner and finish the game.
- */
-public void endGame() {
-    JOptionPane.showConfirmDialog(this, curr_player.getName()+", you are the Big WINNER!!\n"
+    /**
+     * Display the winner and finish the game.
+     */
+    public void endGame() {
+        JOptionPane.showMessageDialog(this, curr_player.getName() + ", you are the Big WINNER!!\n"
                 + "Congrats!!!", "WINNER IS", JOptionPane.INFORMATION_MESSAGE);
         reset(false);
+        windowClosing();
     }
 
-/**
- * Change the turn in each round.
- */
- private void reverseTurn() {
+    public void windowClosing() {
+        System.out.println("WindowListener method called: windowClosing.");
+
+        //A pause so user can see the message before
+        //the window actually closes.
+        ActionListener task = new ActionListener() {
+
+            boolean alreadyDisposed = false;
+
+            public void actionPerformed(ActionEvent e) {
+                if (!alreadyDisposed) {
+                    alreadyDisposed = true;
+                    dispose();
+                } else { //make sure the program exits
+                    System.exit(0);
+                }
+            }
+        };
+        Timer timer = new Timer(500, task); //fire every half second
+        timer.setInitialDelay(2000);        //first delay 2 seconds
+        timer.start();
+    }
+
+    /**
+     * Change the turn in each round.
+     */
+    private void reverseTurn() {
         isTurn1.doClick();
         isTurn2.doClick();
-        if(isTurn1.isSelected()){
-        reversePlayer(thegame.returnFirstTeam());
-        //helpbar.setText(thegame.checkout(curr_player.getScore()));
-        //tareaNotes.setText("Now play > "+curr_player.getPlayer()+" "+curr_player.getScore());
-        
-        }
-        else if(isTurn2.isSelected()){
+        if (isTurn1.isSelected()) {
+            reversePlayer(thegame.returnFirstTeam());
+            //helpbar.setText(thegame.checkout(curr_player.getScore()));
+            //tareaNotes.setText("Now play > "+curr_player .getPlayer()+" "+curr_player.getScore());
+
+        } else if (isTurn2.isSelected()) {
             reversePlayer(thegame.returnSecondTeam());
             //tareaNotes.setText("Now play > "+curr_player.getPlayer()+" "+curr_player.getScore());
-        
+
         }
         helpbar.setText(thegame.checkout(curr_player.getScore()));
+        //helpbar.setText(thegame.checkout(curr_player.getScore()-totalscore,Integer.parseInt(fshoot.getText()),Integer.parseInt(sshoot.getText()),Integer.parseInt(tshoot.getText())));
+        fshoot.setFocusable(true);
     }
- 
- /**
-  * @param pl The player who is turn
-  */
+
+    /**
+     * @param pl The player who is turn
+     */
     private void reversePlayer(ScoardTeam pl) {
-        curr_player=pl;
+        curr_player = pl;
     }
-    
+
     /**
      * Control the behavior if the shoot hits the center of the dartboard.
      * @param tempnum take the value of the shoot.
      * @param a2 JRadioButton (x2) which is effected
      * @param a3 JRadioButton (x2) which is effected
      */
-    private void isCenter(int tempnum, javax.swing.JRadioButton a2, javax.swing.JRadioButton a3 ) {
-        if(tempnum==25 || tempnum==50){
-            a2.setEnabled(false); a3.setEnabled(false); 
+    private void isCenter(int tempnum, javax.swing.JRadioButton a2, javax.swing.JRadioButton a3) {
+        if (tempnum == 25 || tempnum == 50) {
+            a2.setEnabled(false);
+            a3.setEnabled(false);
         }
     }
 
@@ -937,57 +1013,53 @@ public void endGame() {
      * 
      * @return The calculated score of each turn.
      */
-    public int getScore(){
+    public int getScore() {
         return totalscore;
     }
-    
+
     /**
      * It focus to give back the stored score of first team
      * 
      * @return the score of the first team
      * @throws NumberFormatException 
      */
-    public int returnLbl1() throws NumberFormatException{
+    public int returnLbl1() throws NumberFormatException {
         int sc = Integer.parseInt(teamscore1.getText());
         return sc;
     }
-    
+
     /**
      * It focus to give back the stored score of second team
      * 
      * @return the score of the second team
      * @throws NumberFormatException 
      */
-    public int returnLbl2() throws NumberFormatException{
+    public int returnLbl2() throws NumberFormatException {
         int sc = Integer.parseInt(teamscore2.getText());
         return sc;
     }
-    
+
     public void setlblA(String text) {
         teamlbl1.setText(text);
     }
-    
+
     public void setlblB(String text) {
         teamlbl2.setText(text);
     }
-    
+
     void startgame(Game game) {
-        thegame=game;
-        this.curr_player=thegame.returnFirstTeam();
+        thegame = game;
+        this.curr_player = thegame.returnFirstTeam();
         setVisible(true);
     }
-
-
-    
-    private int teamScore1=501;
-    private int teamScore2=501;
-    private static int totalscore=0;
+    private int teamScore1 = 501;
+    private int teamScore2 = 501;
+    private static int totalscore = 0;
     private Game thegame;
     private ArrayList<javax.swing.JRadioButton> resetradiobutton;
     private Rules01 rules;
-    protected String msg="";
+    protected String msg = "";
     private ScoardTeam curr_player;
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton exitbtn;
@@ -1013,7 +1085,7 @@ public void endGame() {
     private javax.swing.JRadioButton radiox3r2;
     private javax.swing.JRadioButton radiox3r3;
     private javax.swing.JButton resetbtn;
-    public javax.swing.JButton scorebtn;
+    private javax.swing.JButton scorebtn;
     private javax.swing.JTextField sshoot;
     private javax.swing.JTextArea tareaNotes;
     private javax.swing.JLabel teamlbl1;
@@ -1022,5 +1094,4 @@ public void endGame() {
     public javax.swing.JTextField teamscore2;
     private javax.swing.JTextField tshoot;
     // End of variables declaration//GEN-END:variables
-
 }
